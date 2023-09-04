@@ -94,5 +94,27 @@ namespace EFCorePeliculas.Controllers
             return genero;
         }
 
+        [HttpGet("paginacion")]
+        public async Task<ActionResult<IEnumerable<Genero>>> GetPaginacion(int pagina = 1)
+        {
+            //Lo que hace es saltear (skip) el primer registro y traer (take) los dos siguientes.
+
+            //var generos = await _context.Generos.Skip(1).Take(2).ToListAsync();
+            //return generos;
+
+            var cantidadRegistrosPorPagina = 2;
+            var generos = await _context.Generos
+                .Skip((pagina - 1) * cantidadRegistrosPorPagina)
+                .Take(cantidadRegistrosPorPagina)
+                .ToListAsync();
+            return generos;
+            
+            /*Con este método obtengo la paginación. Muestro dos registros por cada página en orden consecutivo, es decir, en la página 1
+
+              muestro los registros 1 y 2, pág.2 registros 3 y 4, y así sucesivamente.*/
+        }
+
+
+
     }
 }
