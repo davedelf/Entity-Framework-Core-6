@@ -18,7 +18,7 @@ namespace EFCorePeliculas.Controllers
         [HttpGet]
         public async Task<IEnumerable<Genero>> Get()
         {
-            return await _context.Generos.ToListAsync();
+            return await _context.Generos.OrderBy(g=>g.Nombre).ToListAsync();
 
             /*Optimización de Queries*/
 
@@ -85,7 +85,11 @@ namespace EFCorePeliculas.Controllers
         [HttpGet("string:nombre")]
         public async Task<IEnumerable<Genero>> Filtrar(string nombre)
         {
-            var genero = await _context.Generos.Where(g => g.Nombre.Contains(nombre)).ToListAsync();
+            var genero = await _context.Generos
+                .Where(g => g.Nombre.Contains(nombre))
+              //.OrderBy(g=>g.Nombre)
+              //.OrderyByDescending(g=>g.Nombre)
+                .ToListAsync();
 
             return genero;
         }
