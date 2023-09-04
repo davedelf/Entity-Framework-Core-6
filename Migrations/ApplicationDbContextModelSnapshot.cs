@@ -113,7 +113,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TablaGeneros", "peliculas");
+                    b.ToTable("Generos");
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Pelicula", b =>
