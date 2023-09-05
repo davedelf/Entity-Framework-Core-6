@@ -88,3 +88,31 @@ INSERT INTO Actores (Nombre, Biografia, FechaNacimiento) VALUES
 ('Mariana Pérez', 'Actriz talentosa en papeles dramáticos.', '22/08/2021'),
 ('Eduardo Rodríguez', 'Actor que ha trabajado en películas biográficas.', '04/10/2022');
 
+
+INSERT INTO Cines (Nombre, Ubicacion)
+VALUES
+  ('Hoits Abasto', geography::STPointFromText('POINT(-56.5739616256 -58.6632369152)', 4326)),
+  ('Cinema Avellaneda', geography::STPointFromText('POINT(-66.868586496 -16.1902042112)', 4326)),
+  ('Cinema Caballito', geography::STPointFromText('POINT(-83.0899647488 53.7995047936)', 4326)),
+  ('Hoits DOT', geography::STPointFromText('POINT(58.2939459584 -30.8344269824)', 4326)),
+  ('Cinema Malvinas Argentinas', geography::STPointFromText('POINT(54.7448249344 -11.7951529984)', 4326)),
+  ('Cinema Mendoza', geography::STPointFromText('POINT(-50.8469107712 22.150424064)', 4326)),
+  ('Hoits Moreno', geography::STPointFromText('POINT(0.035590144 -77.2006037504)', 4326)),
+  ('Hoits Moron', geography::STPointFromText('POINT(-79.4076681216 71.2469878784)', 4326)),
+  ('Cinema Neuquen', geography::STPointFromText('POINT(-38.6519783424 89.4423124992)', 4326)),
+  ('Hoits Nuevocentro', geography::STPointFromText('POINT(11.7756829696 -53.4270482432)', 4326)),
+  ('Cinema Palermo', geography::STPointFromText('POINT(-37.4055827456 -63.9836343296)', 4326)),
+  ('Hoits Patio Olmos', geography::STPointFromText('POINT(17.1226107904 -36.9934104576)', 4326)),
+  ('Cinema Puerto Madero', geography::STPointFromText('POINT(-43.2838319104 -45.1020030976)', 4326)),
+  ('Hoits Quilmes', geography::STPointFromText('POINT(72.4252597248 -63.3214644224)', 4326)),
+  ('Hoits Rosario', geography::STPointFromText('POINT(-64.5548225536 -0.1264848896)', 4326)),
+  ('Hoits Salta', geography::STPointFromText('POINT(67.2036155392 -74.31542528)', 4326)),
+  ('Cinema Salta', geography::STPointFromText('POINT(73.3354893312 26.3196644352)', 4326)),
+  ('Cinema San Justo', geography::STPointFromText('POINT(28.578044416 54.2711519232)', 4326)),
+  ('Cinema Santa Fe', geography::STPointFromText('POINT(-3.4003167232 03.9243824128)', 4326)),
+  ('Cinema Soleil', geography::STPointFromText('POINT(82.5609623552 69.224095744)', 4326)),
+  ('Hoits Temperley', geography::STPointFromText('POINT(-9.1677796352 -45.1865458688)', 4326)),
+  ('Cinema Tortugas', geography::STPointFromText('POINT(-53.6565854208 78.93544448)', 4326)),
+  ('Hoits Unicenter', geography::STPointFromText('POINT(73.1405270016 -15.3414889472)', 4326));
+
+  select*from cines
