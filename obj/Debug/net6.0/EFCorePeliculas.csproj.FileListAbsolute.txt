@@ -67,3 +67,5 @@ C:\Users\david\OneDrive\Documentos\CURSOS\Udemy\NetCore\EFCorePeliculas\bin\Debu
 C:\Users\david\OneDrive\Documentos\CURSOS\Udemy\NetCore\EFCorePeliculas\bin\Debug\net6.0\NetTopologySuite.dll
 C:\Users\david\OneDrive\Documentos\CURSOS\Udemy\NetCore\EFCorePeliculas\bin\Debug\net6.0\NetTopologySuite.IO.SqlServerBytes.dll
 C:\Users\david\OneDrive\Documentos\CURSOS\Udemy\NetCore\EFCorePeliculas\obj\Debug\net6.0\EFCoreSqlServerNetTopologySuite.cs
+C:\Users\david\OneDrive\Documentos\CURSOS\Udemy\NetCore\EFCorePeliculas\bin\Debug\net6.0\AutoMapper.dll
+C:\Users\david\OneDrive\Documentos\CURSOS\Udemy\NetCore\EFCorePeliculas\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
