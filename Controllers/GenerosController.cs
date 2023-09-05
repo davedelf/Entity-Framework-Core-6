@@ -6,11 +6,11 @@ namespace EFCorePeliculas.Controllers
 {
     [ApiController]
     [Route("api/generos")]
-    public class GeneroController:ControllerBase    
+    public class GenerosController:ControllerBase    
     {
         private readonly ApplicationDbContext _context;
 
-        public GeneroController(ApplicationDbContext context)
+        public GenerosController(ApplicationDbContext context)
         {
             _context = context;
         }
