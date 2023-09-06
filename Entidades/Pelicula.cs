@@ -11,7 +11,11 @@ namespace EFCorePeliculas.Entidades
 
         //[Unicode(false)]
         public string PosterURL { get; set; }
-        public HashSet<Genero> Generos { get; set; }
+
+        /*Segun la documentación oficial de Microsoft no se garantiza que siempre estén ordenados los objetos con
+         HashSet por lo que resulta conveniente utilizar List. Cabe destacar que esa elección de una u otra
+         (HashSet, ICollection o List) dependerá de la situación planteada.*/
+        public List<Genero> Generos { get; set; }
         public HashSet<SalaDeCine> SalasDeCine { get; set; }
         public HashSet<PeliculaActor> PeliculasActores { get; set; }
     }

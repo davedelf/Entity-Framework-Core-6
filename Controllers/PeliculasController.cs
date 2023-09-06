@@ -24,12 +24,13 @@ namespace EFCorePeliculas.Controllers
         public async Task<ActionResult<PeliculaDTO>> Get(int id)
         {
             var pelicula = await _context.Peliculas
-                .Include(p => p.Generos)
-                .Include (p=>p.SalasDeCine)
-                /*Acá nos tira error 500 al serializar el point del Cine, entonces lo que podemos hacer es realizar una proyección
-                 para así evitar estar intentanto serializar el tipo de dato point.*/
-                    .ThenInclude(s=>s.Cine)
-                .Include(p=>p.PeliculasActores)
+                .Include(p => p.Generos.OrderByDescending(g => g.Nombre))
+                .Include(p => p.SalasDeCine)
+                    /*Acá nos tira error 500 al serializar el point del Cine, entonces lo que podemos hacer es realizar una proyección
+                     para así evitar estar intentanto serializar el tipo de dato point.*/
+                    .ThenInclude(s => s.Cine)
+                /*También podemos filtrar por ejemplo, los actores que nacieron después del año 1980*/
+                .Include(p => p.PeliculasActores.Where(pa => pa.Actor.FechaNacimiento.Value.Year >= 1980))
                     .ThenInclude(pa=>pa.Actor)
                 .FirstOrDefaultAsync(p=>p.Id==id);
 
