@@ -1,11 +1,15 @@
 using EFCorePeliculas;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(opciones => opciones.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+//Con esta línea corregimos el error de datos referenciados que no se muestran en el endpoint al ejecutarlo, como ser ejemplo, Pelicula
+//referencia a Genero y Genero referencia a Pelicula, lo que se traduce en un 'ciclo' o 'cycle'
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

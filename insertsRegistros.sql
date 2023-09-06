@@ -1,4 +1,4 @@
-
+select*from peliculas order by (id) asc
 insert into Generos (NombreGenero)values('Acción')
 insert into Generos (NombreGenero)values('Aventura')
 insert into Generos (NombreGenero)values('Ciencia Ficción')
@@ -115,4 +115,105 @@ VALUES
   ('Cinemark Tortugas', geography::STPointFromText('POINT(-34.4514274 -58.7293884)', 4326)),
   ('Hoyts Unicenter', geography::STPointFromText('POINT(-34.508967 -58.5264559)', 4326));
 
-  select*from cines
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Amanecer en el Bosque', 1, '01/01/2000', 'http://www.ejemplo.com/poster1');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Bajo el Cielo Estrellado', 0, '02/02/2001', 'http://www.ejemplo.com/poster2');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Cazadores del Tesoro', 1, '03/03/2002', 'http://www.ejemplo.com/poster3');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Días de Aventuras', 0, '04/04/2003', 'http://www.ejemplo.com/poster4');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Expedición a lo Desconocido', 1, '05/05/2004', 'http://www.ejemplo.com/poster5');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Fuego en la Noche', 0, '06/06/2005', 'http://www.ejemplo.com/poster6');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Guardianes del Abismo', 1, '07/07/2006', 'http://www.ejemplo.com/poster7');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Héroes Submarinos', 0, '08/08/2007', 'http://www.ejemplo.com/poster8');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Intriga en el Desierto', 1, '09/09/2008', 'http://www.ejemplo.com/poster9');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Jungla Misteriosa', 0, '10/10/2009', 'http://www.ejemplo.com/poster10');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Kárate en el Pirata Dorado', 1, '11/11/2010', 'http://www.ejemplo.com/poster11');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Luna sobre la Ciudad Antigua', 0, '12/12/2011', 'http://www.ejemplo.com/poster12');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Misterio en el Castillo Olvidado', 1, '13/01/2013', 'http://www.ejemplo.com/poster13');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Noche en la Isla Desierta', 0, '14/02/2014', 'http://www.ejemplo.com/poster14');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Oculto en el Espacio Profundo', 1, '15/03/2015', 'http://www.ejemplo.com/poster15');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Perdidos en el Explorador', 0, '16/04/2016', 'http://www.ejemplo.com/poster16');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Querido Tesoro Lejano', 1, '17/05/2017', 'http://www.ejemplo.com/poster17');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Rastro en la Montaña Nevada', 0, '18/06/2018', 'http://www.ejemplo.com/poster18');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Secretos en la Jungla Mística', 1, '19/07/2019', 'http://www.ejemplo.com/poster19');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Travesía en el Océano Profundo', 0, '20/08/2020', 'http://www.ejemplo.com/poster20');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Aventuras en el Desierto Antiguo', 1, '21/09/2021', 'http://www.ejemplo.com/poster21');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Búsqueda en la Ciudad Perdida', 0, '22/10/2022', 'http://www.ejemplo.com/poster22');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Caza del Mar Profundo', 1, '23/11/2023', 'http://www.ejemplo.com/poster23');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Días de Espacio Lejano', 0, '24/12/2024', 'http://www.ejemplo.com/poster24');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Explorando el Bosque Encantado', 1, '25/01/2026', 'http://www.ejemplo.com/poster25');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Fuga en la Isla Desierta', 0, '26/02/2027', 'http://www.ejemplo.com/poster26');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Guardianes del Cielo Azul', 1, '27/03/2028', 'http://www.ejemplo.com/poster27');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Historias en el Castillo Antiguo', 0, '28/04/2029', 'http://www.ejemplo.com/poster28');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Intriga en el Desierto Profundo', 1, '29/05/2030', 'http://www.ejemplo.com/poster29');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Jungla de Tesoros', 0, '30/06/2031', 'http://www.ejemplo.com/poster30');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Kárate en el Mar Profundo', 1, '31/07/2032', 'http://www.ejemplo.com/poster31');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Luna sobre el Bosque Olvidado', 0, '01/08/2033', 'http://www.ejemplo.com/poster32');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Misterio en el Castillo Lejano', 1, '02/09/2034', 'http://www.ejemplo.com/poster33');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Noche en la Isla Misteriosa', 0, '03/10/2035', 'http://www.ejemplo.com/poster34');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Oculto en el Espacio Desconocido', 1, '04/11/2036', 'http://www.ejemplo.com/poster35');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Perdidos en el Explorador Profundo', 0, '05/12/2037', 'http://www.ejemplo.com/poster36');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Querido Tesoro Desconocido', 1, '06/01/2039', 'http://www.ejemplo.com/poster37');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Rastro en la Montaña Profunda', 0, '07/02/2040', 'http://www.ejemplo.com/poster38');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Secretos en la Jungla Lejana', 1, '08/03/2041', 'http://www.ejemplo.com/poster39');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Travesía en el Océano Desconocido', 0, '09/04/2042', 'http://www.ejemplo.com/poster40');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Forrest Gump', 1, '15/05/2000', 'http://www.ejemplo.com/poster46');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('La Lista de Schindler', 0, '08/09/1999', 'http://www.ejemplo.com/poster47');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Pulp Fiction', 1, '23/03/2002', 'http://www.ejemplo.com/poster48');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Señor de los Anillos: El Retorno del Rey', 0, '11/11/2003', 'http://www.ejemplo.com/poster49');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Tiempos Violentos', 1, '05/07/2004', 'http://www.ejemplo.com/poster50');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Salvar al Soldado Ryan', 0, '19/02/2005', 'http://www.ejemplo.com/poster51');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Gladiador', 1, '30/11/2006', 'http://www.ejemplo.com/poster52');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Matrix', 0, '17/08/2007', 'http://www.ejemplo.com/poster53');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Naufrago', 1, '22/06/2008', 'http://www.ejemplo.com/poster54');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Club de la Lucha', 0, '14/04/2009', 'http://www.ejemplo.com/poster55');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Silencio de los Corderos', 1, '07/01/2010', 'http://www.ejemplo.com/poster56');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Rey León', 0, '25/10/2011', 'http://www.ejemplo.com/poster57');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Titanic', 1, '01/12/2012', 'http://www.ejemplo.com/poster58');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('La Vida es Bella', 0, '14/06/2013', 'http://www.ejemplo.com/poster59');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Mente Indomable', 1, '10/04/2014', 'http://www.ejemplo.com/poster60');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Gran Lebowski', 0, '05/03/2015', 'http://www.ejemplo.com/poster61');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Interestelar', 1, '19/01/2016', 'http://www.ejemplo.com/poster62');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Caballero de la Noche', 0, '29/10/2017', 'http://www.ejemplo.com/poster63');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('La Red Social', 1, '01/03/2018', 'http://www.ejemplo.com/poster64');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Resplandor', 0, '09/09/2019', 'http://www.ejemplo.com/poster65');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Paseo de la Fama', 1, '12/07/2020', 'http://www.ejemplo.com/poster66');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('12 Monos', 0, '18/05/2021', 'http://www.ejemplo.com/poster67');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Blade Runner', 1, '20/03/2022', 'http://www.ejemplo.com/poster68');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Jurassic Park', 0, '04/12/2022', 'http://www.ejemplo.com/poster69');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Eterno Resplandor de una Mente sin Recuerdos', 1, '19/08/2023', 'http://www.ejemplo.com/poster70');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Matrix', 0, '25/07/2021', 'http://www.ejemplo.com/poster71');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Donnie Darko', 1, '13/04/2022', 'http://www.ejemplo.com/poster72');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Los Infiltrados', 0, '05/01/2023', 'http://www.ejemplo.com/poster73');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Gran Hotel Budapest', 1, '14/12/2020', 'http://www.ejemplo.com/poster74');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Renacido', 0, '07/09/2021', 'http://www.ejemplo.com/poster75');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Birdman', 1, '16/06/2022', 'http://www.ejemplo.com/poster76');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Parásitos', 0, '19/03/2023', 'http://www.ejemplo.com/poster77');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Una Mente Brillante', 1, '25/02/2021', 'http://www.ejemplo.com/poster78');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Club de los Cinco', 0, '12/12/2020', 'http://www.ejemplo.com/poster79');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Padrino', 1, '14/11/2022', 'http://www.ejemplo.com/poster80');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Parque Jurásico', 1, '15/08/2021', 'http://www.ejemplo.com/poster81');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Matrix Reloaded', 0, '21/06/2022', 'http://www.ejemplo.com/poster82');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('El Padrino: Parte II', 1, '08/04/2023', 'http://www.ejemplo.com/poster83');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('Los Vengadores', 0, '30/11/2021', 'http://www.ejemplo.com/poster84');
+INSERT INTO Peliculas (Titulo, EnCartelera, FechaEstreno, PosterURL) VALUES ('La Sirenita', 1, '12/09/2022', 'http://www.ejemplo.com/poster85');
+
+
+select PeliculasId, GenerosId from GeneroPelicula order by PeliculasId
+
+insert into GeneroPelicula(PeliculasId,GenerosId)values(1,12)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(10,8)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(11,5)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(21,2)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(26,7)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(32,5)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(50,4)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(52,9)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(53,14)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(57,17)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(63,13)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(65,11)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(66,10)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(70,16)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(74,14)
+insert into GeneroPelicula(PeliculasId,GenerosId)values(80,20)
+
+select*from Peliculas
