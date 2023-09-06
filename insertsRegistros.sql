@@ -216,4 +216,3 @@ insert into GeneroPelicula(PeliculasId,GenerosId)values(70,16)
 insert into GeneroPelicula(PeliculasId,GenerosId)values(74,14)
 insert into GeneroPelicula(PeliculasId,GenerosId)values(80,20)
 
-select*from Peliculas
