@@ -50,5 +50,26 @@ namespace EFCorePeliculas.Controllers
              como en su respectivo DTO.*/
            
         }
+
+        [HttpGet("cargadoselectivo/{id:int}")]
+        public async Task<ActionResult>GetSelectivo(int id)
+        {
+            var pelicula = await _context.Peliculas.Select(p =>
+            new
+            {
+                Id = p.Id,
+                Titulo = p.Titulo,
+                Generos = p.Generos.OrderByDescending(g=>g.Nombre).Select(g=>g.Nombre).ToList(),
+                /*Puedo generar operaciones también. Ej*/
+                CantidadActores=p.PeliculasActores.Count(), //Cuantos actores tiene la película
+                CantidadCines=p.SalasDeCine.Select(s=>s.CineId).Distinct().Count() //En cuantos cines se encuentra la película
+            }).FirstOrDefaultAsync(p => p.Id == id);
+
+            if (pelicula == null)
+            {
+                return NotFound();
+            }
+            return Ok(pelicula);
+        }
     }
 }
