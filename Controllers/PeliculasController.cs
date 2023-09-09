@@ -71,5 +71,37 @@ namespace EFCorePeliculas.Controllers
             }
             return Ok(pelicula);
         }
+
+        [HttpGet("cargadoExplicito/{id:int}")]
+        public async Task<ActionResult<PeliculaDTO>> GetExplicito(int id)
+        {
+            /*Para hacer el Cargado Explícito necesitamos tener activado el Astracking; por defecto a nivel global
+             lo tenemos desactivado (AsNoTracking), entonces vamos a activarlo*/
+            var pelicula= await _context.Peliculas.AsTracking().FirstAsync(p=>p.Id == id);
+
+            await _context.Entry(pelicula).Collection(p => p.Generos).LoadAsync();
+
+            /*Funciona como si quisieramos cargar la película y luego cargar sus datos relacionados; de esta forma funciona
+             el cargado explícito, es decir, explicitamos qué queremos cargar*/
+
+            /*pelicula is null es lo mismo que pelicula==null*/
+            /*A nivel consola se realizan dos query diferentes; primero uno para pelicula y luego otro para géneros
+             Lo bueno del cargado explícito es que podemos separar la carga de la entidad principal de las entidades secundarias
+            o relacionadas. No necesariamente tenemos que cargar toda la data relacionada, hasta podemos realizar querys sobre ello.
+            Ej.: Queremos cargar cuantos generos tiene la película (pero no los géneros en si)*/
+            var cantidadGeneros= await _context.Entry(pelicula).Collection(p=>p.Generos).Query().CountAsync();
+            if(pelicula is null) 
+            {
+                return NotFound(); 
+            }
+
+            var peliculaDTO=_mapper.Map<PeliculaDTO>(pelicula); 
+
+            return Ok(peliculaDTO);
+
+            /*A veces es más optimo cargar toda la data relacionada en una sola consulta ya sea con un Select o con un Include, pero dependerá
+             del caso o la situación que se nos presente y qué requerimos cargar en el momento.
+             Se puede hacer de las tres formas, pero tener en cuenta la optimización de la API.*/
+        }
     }
 }
