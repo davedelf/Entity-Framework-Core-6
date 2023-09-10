@@ -15,7 +15,7 @@ namespace EFCorePeliculas.Entidades
         datos o personalizarlo debemos hacerlo de forma Manual. Para hacerlo de forma Automática colocamos HashSet en ambas entidades.*/
 
         /*Forma Automática:*/
-        public HashSet<Pelicula> Peliculas { get; set; }
+        public virtual HashSet<Pelicula> Peliculas { get; set; }
 
         /*CLAVE PRIMARIA*/
 
