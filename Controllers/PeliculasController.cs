@@ -228,7 +228,7 @@ namespace EFCorePeliculas.Controllers
 
         Explicit Loading: Podemos realizar la carga de la data en un query aparte ejecutando la función Load.
 
-        Lazy Loading: Podemos realizar la carga de la data en un query accediendo a la propiedad de navegación correspondiente.
+        Lazy Loading: Podemos realizar la carga de la data en un query aparte accediendo a la propiedad de navegación correspondiente.
 
         (Estas dos últimas formas pueden ser un poco ineficientes por la forma en que operan por lo que deben ser utilizadas con precaución)
 
