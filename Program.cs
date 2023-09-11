@@ -24,7 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
     /* De esta forma el comportamiento será global y no tendremos que especificarlo en cada endpoint */
     opciones.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
-    opciones.UseLazyLoadingProxies();
+    //opciones.UseLazyLoadingProxies();
 });
 
 builder.Services.AddAutoMapper(typeof(Program));

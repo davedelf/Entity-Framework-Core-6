@@ -113,33 +113,34 @@ namespace EFCorePeliculas.Controllers
 
 
         }
-        [HttpGet("lazyloading/{id:int}")]
-        public async Task<ActionResult<List<PeliculaDTO>>> GetLazyLoading(int id)
-        {
-            /*El problema N+1 se da cuando tenemos un conjunto de entidades relacionadas e intentamos acceder a cada ellas de 
-             manera individual. Con lazy loading este es un problema sumamente ineficiente, ya que se realiza
-             un query por cada consulta. Ejemplo:*/
-            var peliculas = await _context.Peliculas.AsTracking().ToListAsync();
-            foreach (var pelicula in peliculas)
-            {
-                //Cargar los generos de la pelicula
-                /*Problema N+1
-                 Por cada pelicula que tengamos vamos a cargar sus respectivos géneros.
-                 Si tuvieramos 100 películas entonces necesitaríamos 100 query para cargar cada una 
-                 y a su vez un query para cargar los géneros. Por eso es N+1 (N querys para películas y +1 query para los Géneros./
-                pelicula.Generos.ToList();
-            }
 
-            /*En este caso la data relacionada se cargará ya que _mapper está llamandola; caso contrario 
-             no se carga*/
+        //[HttpGet("lazyloading/{id:int}")]
+        //public async Task<ActionResult<List<PeliculaDTO>>> GetLazyLoading(int id)
+        //{
+        //    /*El problema N+1 se da cuando tenemos un conjunto de entidades relacionadas e intentamos acceder a cada ellas de 
+        //     manera individual. Con lazy loading este es un problema sumamente ineficiente, ya que se realiza
+        //     un query por cada consulta. Ejemplo:*/
+        //    var peliculas = await _context.Peliculas.AsTracking().ToListAsync();
+        //    foreach (var pelicula in peliculas)
+        //    {
+        //        //Cargar los generos de la pelicula
+        //        /*Problema N+1
+        //         Por cada pelicula que tengamos vamos a cargar sus respectivos géneros.
+        //         Si tuvieramos 100 películas entonces necesitaríamos 100 query para cargar cada una 
+        //         y a su vez un query para cargar los géneros. Por eso es N+1 (N querys para películas y +1 query para los Géneros./
+        //        pelicula.Generos.ToList();
+        //    }
+
+        //    /*En este caso la data relacionada se cargará ya que _mapper está llamandola; caso contrario 
+        //     no se carga*/
 
 
-            }
-            var peliculasDTOs = _mapper.Map<List<PeliculaDTO>>(peliculas);
-            return peliculasDTOs;
+        //    }
+        //    var peliculasDTOs = _mapper.Map<List<PeliculaDTO>>(peliculas);
+        //    return peliculasDTOs;
 
-            /*En resumen: Convenientemente conviene utilizar Eager Loading o Cargado Selectivo y no se 
-             recomienda el uso de Lazy Loading*/
-        }
+        //    /*En resumen: Convenientemente conviene utilizar Eager Loading o Cargado Selectivo y no se 
+        //     recomienda el uso de Lazy Loading*/
+        //}
     }
 }

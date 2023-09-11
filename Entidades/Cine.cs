@@ -18,11 +18,11 @@ namespace EFCorePeliculas.Entidades
          en SQL Server. La librería que nos puede ayudar es Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite
          Luego de instalado el NuGet debemos inyectarlo en el Program.cs para que EntityFramework pueda utilizarlo*/
         public Point Ubicacion { get; set; }
-        public virtual CineOferta CineOferta { get; set; }
+        public  CineOferta CineOferta { get; set; }
         /*HashSet lo usamos para colecciones; en este caso estamos indicando que el Cine tiene una coleccion de salas o varias salas.
          La desventaja de HashSet es que no es una lista ordenada, es decir, no ordena. Para tener una coleccion ordenada
         debemos usar ICollection o también List*/
-        public virtual HashSet<SalaDeCine> SalasDeCine { get; set; }
+        public  HashSet<SalaDeCine> SalasDeCine { get; set; }
 
     }
 }
