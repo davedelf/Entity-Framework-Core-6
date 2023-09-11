@@ -103,7 +103,14 @@ namespace EFCorePeliculas.Controllers
 
         /*Como vemos es muy simple agregar un registro con data relacioanda simplemente agregando las propiedades
          de navegación correspondientes. Sin embargo conviene utilizar un DTO*/
-        
 
+        [HttpPost("conDTO")]
+        public async Task<ActionResult> Post(CineCreacionDTO cineCreacionDTO)
+        {
+            var cine = _mapper.Map<Cine>(cineCreacionDTO);
+            _context.Add(cine);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
