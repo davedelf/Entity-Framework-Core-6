@@ -181,9 +181,10 @@ namespace EFCorePeliculas.Controllers
              si le pasamos un título entonces se filtrará por éste. Acquí implementamos el concepto de Ejecución Diferida*/
 
         }
-            [HttpGet("filtrar")]
-            public async Task<ActionResult<List<PeliculaDTO>>> Filtrar([FromQuery] PeliculasFiltroDTO peliculasFiltroDTO)
-            {
+
+        [HttpGet("filtrar")]
+        public async Task<ActionResult<List<PeliculaDTO>>> Filtrar([FromQuery] PeliculasFiltroDTO peliculasFiltroDTO)
+        {
             //El FromQuery me va a permitir recibir el tipo de dato complejo,  en este caso, PeliculaDTO
             //AsQueryable es basicamente el tipo de dato que nos permite ir construyendo nuestros queries 
             var peliculasQueryable = _context.Peliculas.AsQueryable();
@@ -213,6 +214,27 @@ namespace EFCorePeliculas.Controllers
 
             return _mapper.Map<List<PeliculaDTO>>(peliculas);
             
-            }
+        }
+
+        /*RESUMEN*/
+        /*EF Core nos ayuda a consultar datos de la db utilizando código LINQ, ya sean filtros, proyecciones, agrupamientos, tomar y saltar elementos
+          son algunas de las funciones que podemos hacer utilizando simples líneas de C#.
+          
+        Eager Loading: Cargmaos la data de nuestras entidades relacionadas desde un principio. Esta técncia es eficiente porque todo lo hacemos pocos queries
+        y sin realizar demasiados viajes a la bd.
+        
+        Select Loading: Tenemos mucha flexibilidad para seleccionar aquellas columnas que querramos, incluso aquellas que sean de datos
+        relacionados.
+
+        Explicit Loading: Podemos realizar la carga de la data en un query aparte ejecutando la función Load.
+
+        Lazy Loading: Podemos realizar la carga de la data en un query accediendo a la propiedad de navegación correspondiente.
+
+        (Estas dos últimas formas pueden ser un poco ineficientes por la forma en que operan por lo que deben ser utilizadas con precaución)
+
+        Ejecución Diferida: Nos permite armar nuestro query paso a paso. Esto nos da la oportunidad de realizar queries dinámicamente dependiendo
+        de los valores enviados por el usuario.
+        */
+
     }
 }
