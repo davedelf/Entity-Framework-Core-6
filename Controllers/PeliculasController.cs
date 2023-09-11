@@ -142,5 +142,39 @@ namespace EFCorePeliculas.Controllers
         //    /*En resumen: Convenientemente conviene utilizar Eager Loading o Cargado Selectivo y no se 
         //     recomienda el uso de Lazy Loading*/
         //}
+
+        /*Ejemplo de endpoint utilizando group by; en este caso para las películas que se encuentran en cartelera*/
+
+        [HttpGet("agrupadasPorEstreno")]
+        public async Task<ActionResult> AgrupadasPorCartelera()
+        {
+            var peliculasAgrupadas = await _context.Peliculas.GroupBy(p => p.EnCartelera)
+                .Select(g => new
+                {
+                    EnCartelera = g.Key, //key se refiere a p=>p.EnCartelera
+                    Conteo = g.Count(),
+                    Peliculas = g.ToList()
+                }).ToListAsync();
+            return Ok(peliculasAgrupadas);
+        }
+
+        /*También podemos agrupar por el resultado ded una acción, por ejemplo, por cantidad de géneros*/
+
+        [HttpGet("agrupadasPorGenero")]
+        public async Task<ActionResult> AgrupadasPorCantidadGenero()
+        {
+            var peliculasAgrupadas = await _context.Peliculas.GroupBy(p => p.Generos.Count())
+            .Select(g => new
+            {
+                conteo=g.Key,
+                Titulos=g.Select(x=>x.Titulo),
+                Generos=g.Select(x=>x.Generos).SelectMany(gen=>gen).Select(gen=>gen.Nombre).Distinct()
+                //Lo que hace es tomar los géneros de los resultados y 
+                //colocarlos en una única colección, es decir, agrupa por géneros sin repetir resultados
+            }).ToListAsync();
+            return Ok(peliculasAgrupadas);
+
+            /*Entonces nos retorna las colecciones por cantidad de conteo (generos) y sus respectivos géneros*/
+        }
     }
 }
