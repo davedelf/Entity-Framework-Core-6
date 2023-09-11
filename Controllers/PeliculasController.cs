@@ -175,6 +175,44 @@ namespace EFCorePeliculas.Controllers
             return Ok(peliculasAgrupadas);
 
             /*Entonces nos retorna las colecciones por cantidad de conteo (generos) y sus respectivos géneros*/
+
+            /*Ahora vamos a hacer una función para filtrar películas, ya sea por su género o por si se estrenará en el futuro
+             Sin embargo, los filtros serán dinámicos. Se aplicarán segun los valores que le pasemos a la función de filtrado. Ejemplo,
+             si le pasamos un título entonces se filtrará por éste. Acquí implementamos el concepto de Ejecución Diferida*/
+
         }
+            [HttpGet("filtrar")]
+            public async Task<ActionResult<List<PeliculaDTO>>> Filtrar([FromQuery] PeliculasFiltroDTO peliculasFiltroDTO)
+            {
+            //El FromQuery me va a permitir recibir el tipo de dato complejo,  en este caso, PeliculaDTO
+            //AsQueryable es basicamente el tipo de dato que nos permite ir construyendo nuestros queries 
+            var peliculasQueryable = _context.Peliculas.AsQueryable();
+
+            if (!string.IsNullOrEmpty(peliculasFiltroDTO.Titulo))
+            {
+                peliculasQueryable=peliculasQueryable.Where(p=>p.Titulo.Contains(peliculasFiltroDTO.Titulo));
+            }
+            if (peliculasFiltroDTO.EnCartelera)
+            {
+                peliculasQueryable = peliculasQueryable.Where(p => p.EnCartelera);
+            }
+            if(peliculasFiltroDTO.ProximosEstrenos)
+            {
+                var hoy = DateTime.Today;
+                peliculasQueryable.Where(p => p.FechaEstreno > hoy);
+            }
+            if (peliculasFiltroDTO.GeneroId != 0)
+            {
+                peliculasQueryable=peliculasQueryable.Where(p=>p.Generos.Select(g=>g.Id)
+                .Contains(peliculasFiltroDTO.GeneroId));
+            }
+
+
+            var peliculas = await peliculasQueryable.Include(p => p.Generos).ToListAsync();
+
+
+            return _mapper.Map<List<PeliculaDTO>>(peliculas);
+            
+            }
     }
 }
