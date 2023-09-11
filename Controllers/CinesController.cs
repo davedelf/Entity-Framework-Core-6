@@ -58,6 +58,52 @@ namespace EFCorePeliculas.Controllers
             return Ok(cines);
         }
 
+        /*Insertando registro con data relacionada*/
+
+        [HttpPost]
+        public async Task<ActionResult> Post()
+        {
+            var geometryFactory= NtsGeometryServices.Instance.CreateGeometryFactory(srid:4326);
+            var ubicacionCine = geometryFactory.CreatePoint(new Coordinate(-31.4198807, -64.2062673));
+
+            /*Creamos el cine que es la entidad principal y las secundarias o entidades relacionadas*/
+
+            var cine = new Cine()
+            {
+                Nombre = "Mi Cine",
+                Ubicacion = ubicacionCine,
+                CineOferta = new CineOferta()
+                {
+                    PorcentajeDescuento = 5,
+                    FechaInicio = DateTime.Today,
+                    FechaFin = DateTime.Today.AddDays(7)
+                },
+                SalasDeCine = new HashSet<SalaDeCine>()
+                {
+                    new SalaDeCine()
+                    {
+                        Precio=200,
+                        TipoSalaDeCine=TipoSalaDeCine.DosDimensiones,
+
+                    },
+                    new SalaDeCine()
+                    {
+                        Precio=350,
+                        TipoSalaDeCine=TipoSalaDeCine.TresDimensiones,
+
+                    }
+                }
+            };
+
+            _context.Add(cine);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        /*Como vemos es muy simple agregar un registro con data relacioanda simplemente agregando las propiedades
+         de navegación correspondientes. Sin embargo conviene utilizar un DTO*/
         
+
     }
 }
