@@ -115,6 +115,35 @@ namespace EFCorePeliculas.Controllers
         }
 
 
+        /*  EF Core nos la pone facil para trabajar con la modificacion de datos. Si hacemos una consulta y no usamos AsNoTracking, entonces las instancias de las entidades que tenemos estan recibiendo seguimiento de EF Core. Esto quiere decir que si modificamos una propiedad del objeto y utilizamos la función SaveChanges() entonces los cambios se almacenarán en la base de datos. A este modelo de trabajo lo llamamos Modelo Conectado. La idea de este modelo es que utilizamos la misma instancia del DbContext tanto para consultar la data como para editarla. Esta es la forma más simple de trabajar, sin embargo no siempre vamos a recibir la instancia de la entidad desde el cliente. Esto se da bastante en escenarios web en donde el cliente va a tener un formulario, lo va a llenar y nos va a enviar la data del formulario a traves de una petición HTTP, lo que quiere decir que es ainstancia de la entidad no fue creada por el mismo DbContext con el cual va a ser procesada. A esto le llamamos Modelo Desconectado. Por ejemplo, si trabajamos con un cliente o una aplicación de React, nos podría enviar un actor para que editemos una de sus propiedades. Los cambios realizados en la entidad actor van a ser actualizados en la base de datos a través de un DbContext distinto al que cargó dicha entidad. ¿Y cómo podemos hacer para que EF Core tome una simple instancia de una clase y modifique registros de una base de datos con ella? Pues esto se trabaja con el Status de la Entidad. 
+            Como mencionabamos anteriormente, EF Core le da seguimiento a nuestras instancias de entidades, este seguimiento se realiza a traves del status registrado de cada instancia. Los siguientes son los status que maneja EF Core:
+            - Agregado/Added: Una entidad tiene que ser creada en la bd.
+            - Modificado/Modified: La entidad representa un registro de la bd y dicha entidad tiene cambios pendientes ded replicar en el registro correspondiente.
+            - Sin Modificar/Unchanged: La entidad representa un registro de la bd pero no hay cambios pendientes para guardar.
+            - Borrado/Deleted: Una entidad representa un registro de la bd y dicho registro debe ser eliminado.
+            - Sin seguimiento/Detached: Es cuando una entidad no está recibiendo ningún seguimiento por EF Core.*/
 
+
+        [HttpPost("postSimple")]
+        public async Task<ActionResult>Post(Genero genero)
+        {
+            /*En la siguiente linea lo que estamos haciendo es cambiar el status de la entidad género. No es que ya s eva a agregar
+             a la bd sino que está marcando ese objeto como próximo a agregar para cuando ejecutemos la función SaveChanges se agregue a la bd.*/
+            _context.Add(genero);
+
+            /*Con el Savechanges EF Core va a chequear todos los objetos con seguimiento, va a verificar su status y con dicho status
+             va a realizar algo. En la linea anterior el objeto genero está marcado como agregado, entonces SaveChanges lo va a agregar a la bd.*/
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost("postMultiple")]
+        public async Task<ActionResult> Post(Genero[] generos)
+        {
+            _context.AddRange(generos);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
