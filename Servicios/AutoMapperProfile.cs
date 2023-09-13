@@ -45,6 +45,8 @@ namespace EFCorePeliculas.Servicios
                         Id = id 
                     })));
             CreateMap<PeliculaActorCreacionDTO, PeliculaActor>();
+
+            CreateMap<ActorCreacionDTO, Actor>();
         }
     }
 }

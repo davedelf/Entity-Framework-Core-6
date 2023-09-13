@@ -63,5 +63,15 @@ namespace EFCorePeliculas.Controllers
              simplemente debemos modificar el DTO correspondiente sin tener que tocar la entidad base. Ejemplo, si agregamos el campo
              FechaNacimiento en el ActorDTO coincidirá con su entidad Actor, lo mapeará y lo mostrará en la consulta del endpoint*/
         }
+
+        /*MAPEO FLEXIBLE*/
+        [HttpPost]
+        public async Task<ActionResult> Post(ActorCreacionDTO actorCreacionDTO)
+        {
+            var actor=_mapper.Map<Actor>(actorCreacionDTO);
+            _context.Add(actor);
+            await _context.SaveChangesAsync();
+            return Ok(actor);
+        }
     }
 }

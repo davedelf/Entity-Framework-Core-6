@@ -8,9 +8,16 @@ namespace EFCorePeliculas.Entidades.Configuraciones
     {
         public void Configure(EntityTypeBuilder<Actor> builder)
         {
-            builder.Property(prop => prop.Nombre).HasMaxLength(150).IsRequired();
+            builder.Property(prop => prop.Nombre)
+                .HasMaxLength(150)
+                .IsRequired();
             /*MAPEAR DATETIME A DATE*/
             //modelBuilder.Entity<Actor>().Property(prop => prop.FechaNacimiento).HasColumnType("date");
+
+
+            /*Acá indicamos que la propiedad Nombre tiene el Campo _nombre*/
+            builder.Property(x => x.Nombre).HasField("_nombre");
+
         }
     }
 }
