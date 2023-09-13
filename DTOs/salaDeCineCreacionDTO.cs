@@ -2,7 +2,7 @@
 
 namespace EFCorePeliculas.DTOs
 {
-    public class salaDeCineCreacionDTO
+    public class SalaDeCineCreacionDTO
     {
         public decimal Precio { get; set; }
         public TipoSalaDeCine TipoSalaDeCine { get; set; }

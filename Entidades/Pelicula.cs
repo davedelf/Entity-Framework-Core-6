@@ -16,7 +16,7 @@ namespace EFCorePeliculas.Entidades
          HashSet por lo que resulta conveniente utilizar List. Cabe destacar que esa elección de una u otra
          (HashSet, ICollection o List) dependerá de la situación planteada.*/
         public  List<Genero> Generos { get; set; }
-        public  HashSet<SalaDeCine> SalasDeCine { get; set; }
-        public  HashSet<PeliculaActor> PeliculasActores { get; set; }
+        public  List<SalaDeCine> SalasDeCine { get; set; }
+        public  List<PeliculaActor> PeliculasActores { get; set; }
     }
 }

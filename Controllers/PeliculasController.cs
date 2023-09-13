@@ -166,9 +166,9 @@ namespace EFCorePeliculas.Controllers
             var peliculasAgrupadas = await _context.Peliculas.GroupBy(p => p.Generos.Count())
             .Select(g => new
             {
-                conteo=g.Key,
-                Titulos=g.Select(x=>x.Titulo),
-                Generos=g.Select(x=>x.Generos).SelectMany(gen=>gen).Select(gen=>gen.Nombre).Distinct()
+                conteo = g.Key,
+                Titulos = g.Select(x => x.Titulo),
+                Generos = g.Select(x => x.Generos).SelectMany(gen => gen).Select(gen => gen.Nombre).Distinct()
                 //Lo que hace es tomar los géneros de los resultados y 
                 //colocarlos en una única colección, es decir, agrupa por géneros sin repetir resultados
             }).ToListAsync();
@@ -191,20 +191,20 @@ namespace EFCorePeliculas.Controllers
 
             if (!string.IsNullOrEmpty(peliculasFiltroDTO.Titulo))
             {
-                peliculasQueryable=peliculasQueryable.Where(p=>p.Titulo.Contains(peliculasFiltroDTO.Titulo));
+                peliculasQueryable = peliculasQueryable.Where(p => p.Titulo.Contains(peliculasFiltroDTO.Titulo));
             }
             if (peliculasFiltroDTO.EnCartelera)
             {
                 peliculasQueryable = peliculasQueryable.Where(p => p.EnCartelera);
             }
-            if(peliculasFiltroDTO.ProximosEstrenos)
+            if (peliculasFiltroDTO.ProximosEstrenos)
             {
                 var hoy = DateTime.Today;
                 peliculasQueryable.Where(p => p.FechaEstreno > hoy);
             }
             if (peliculasFiltroDTO.GeneroId != 0)
             {
-                peliculasQueryable=peliculasQueryable.Where(p=>p.Generos.Select(g=>g.Id)
+                peliculasQueryable = peliculasQueryable.Where(p => p.Generos.Select(g => g.Id)
                 .Contains(peliculasFiltroDTO.GeneroId));
             }
 
@@ -213,7 +213,7 @@ namespace EFCorePeliculas.Controllers
 
 
             return _mapper.Map<List<PeliculaDTO>>(peliculas);
-            
+
         }
 
         /*RESUMEN*/
@@ -236,5 +236,30 @@ namespace EFCorePeliculas.Controllers
         de los valores enviados por el usuario.
         */
 
+        /*Vamos a insertar peliculas con generos y salas de cines ya creados, es decir, data relacionada ya existente.
+         Para ello vamos a trabajar con el Status*/
+        [HttpPost("conDataExistente")]
+        public async Task<ActionResult> Post(PeliculaCreacionDTO peliculaCreacionDTO)
+        {
+            var pelicula = _mapper.Map<Pelicula>(peliculaCreacionDTO);
+            /*Lo que le estoy diciendo con el status unchanged es que quiero agregar los generos ya existentes pero que no quiero
+             ni modificarlos ni agregar nuevos, es por ello que es unchanged. Simplemente quiero utilizar los ya existentes.*/
+            pelicula.Generos.ForEach(g => _context.Entry(g).State = EntityState.Unchanged);
+            pelicula.SalasDeCine.ForEach(s => _context.Entry(s).State = EntityState.Unchanged);
+            /*Con PeliculasActores no necesitamos hacer lo mismo porque yo realmente si quiero crear un actor, ya que la relacion
+             pelicula-actor es N:N*/
+            
+            if (pelicula.PeliculasActores is not null)
+            {
+                for (int i = 0; i < pelicula.PeliculasActores.Count; i++)
+                {
+                    pelicula.PeliculasActores[i].Orden = i + 1;
+                }
+            }
+
+            _context.Add(pelicula);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

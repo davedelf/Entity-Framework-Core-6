@@ -101,6 +101,7 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
+        /*Insertando Cine con Data Relacionada Inexistente*/
         /*Como vemos es muy simple agregar un registro con data relacioanda simplemente agregando las propiedades
          de navegación correspondientes. Sin embargo conviene utilizar un DTO*/
 
@@ -112,5 +113,8 @@ namespace EFCorePeliculas.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
+
+        /*Insertando Cine con Data Relacionada Existente*/
+
     }
 }

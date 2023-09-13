@@ -9,6 +9,6 @@ namespace EFCorePeliculas.DTOs
         public double Latitud { get; set; }
         public double Longitud { get; set; }
         public CineOfertaCreacionDTO CineOferta { get; set; }
-        public salaDeCineCreacionDTO[] SalasDeCine { get; set; }
+        public SalaDeCineCreacionDTO[] SalasDeCine { get; set; }
     }
 }
