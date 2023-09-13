@@ -1,4 +1,5 @@
-﻿using EFCorePeliculas.Entidades;
+﻿using EFCorePeliculas.DTOs;
+using EFCorePeliculas.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -173,5 +174,80 @@ namespace EFCorePeliculas.Controllers
 
 
         }
+
+        /*BORRADO NORMAL - EJEMPLO*/
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+           var genero=await _context.Generos.FirstOrDefaultAsync(g=>g.Id==id);
+           if(genero is null)
+           {
+                return NotFound();
+           }
+           _context.Remove(genero); //Remove es el cambia el status del género a borrado
+           await _context.SaveChangesAsync();
+           return Ok();
+        }
+
+        /*BORRADO LÓGICO - EJEMPLO*/
+        [HttpDelete("BorradoLogico/{id:int}")]
+        public async Task<ActionResult> DeleteLogico (int id)
+        {
+            /*Colocamos AsTracking xq vamos a hacer una actualización, es decir,cambiar el valor del campo booleano*/
+            var genero=await _context.Generos.AsTracking().FirstOrDefaultAsync(g=>g.Id==id);
+            if(genero is null)
+            {
+                return NotFound();
+            }
+            genero.EstaBorrado = true;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        /*Endpoint Get para traer aquellos géneros que no han sido borrados de manera lógica/no han sido dados de baja*/
+        [HttpGet("NoBorradosLogico")]
+        public async Task<IEnumerable<Genero>> GetNoBorradosLogico()
+        {
+            var genero = await _context.Generos
+                .Where(g => g.EstaBorrado==false)
+                .ToListAsync();
+
+            return genero;
+        }
+        /*O en lugar de crear un nuevo endpoint podemos refactorizar alguno de los ya creados previamente*/
+
+        /*Pero entonces en cada verbo Get o cada acción que requiera géneros vamos a tener que refactorizar cada enpoint para indicar
+         que solo nos traiga los activos (no borrados) y puede que se nos escape en algun momento. Para simplificar todo esto podemos aplicar
+         Filtros por Defecto al Nivel del Modelo*/
+
+        /*Aquellos filtros a nivel de modelo que configuremos siempre se van a aplicar en nuestra entidad. Veamos un ejemplo en
+         GeneroConfig*/
+
+        /*Y de esta forma ya no necesitaremos refactorizar cada endpoint agregando cláusula Where, condición o filtro.
+         Trabajar sobre el API Fluente mediante los Config puede resultar más comodo y organizado*/
+
+        /*Ahora vamos a ver cómo podemos saltarnos este filtro. Un caso puede ser cuando necesito restaurar un género borrado
+         o cuando quiero mostrarle a un administrador todos los géneros incluidos los borrados. Para ello hacemos uso de una función
+        llamada IgnoreQueryFilters. Lo vemos a continuación con un Post para restaurar géneros:*/
+
+        [HttpPost("Restaurar/{id:int}")]
+        public async Task<ActionResult> Restaurar(int id)
+        {
+            var genero = await _context.Generos.AsTracking()
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(g => g.Id == id);
+            if(genero is null)
+            {
+                return NotFound();
+            }
+            genero.EstaBorrado = false;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        /*Ejecutamos el endpoint y podemos observar cómo el registro cambia su estado lógico, por lo cual vuelve a 
+         aparecer cuando realizamos la petición Get mediante su id o consultamos todos los géneros. Cuando estaba dado de baja
+         e intentabamos traerlo por su id nos arrojaba Error 404 pero al restaurarlo mediante el Post volvemos a intentar traerlo
+         y ahora nos lo devuelve con su respectivo Código 200-*/
     }
+
 }

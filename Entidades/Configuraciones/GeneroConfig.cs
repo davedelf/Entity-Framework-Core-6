@@ -19,6 +19,11 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             //builder.ToTable(name: "TablaGeneros", schema: "peliculas");
             /*Por lo general estas propiedades .ToTable() y .HasColumnName() no se suelen utilizar, pero en ciertas ocasiones pueden 
              resultar útiles, sobre todo cuando queremos hardcodear*/
+
+            /*Filtros a Nivel Modelo*/
+            builder.HasQueryFilter(g => g.EstaBorrado == false);
+
+            //o es lo mismo decir: builder.HasQueryFilter(g=>!g.EstaBorrado);
         }
     }
 }

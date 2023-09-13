@@ -168,5 +168,15 @@ namespace EFCorePeliculas.Controllers
         /*Podemos observar que al hacer el truco aprendido hace todo por nosotros de una forma sencilla sin complicarla. Con tan solo
          utilizar los Include y luego el AutoMapper todo se hace se manera resumida, tanto para relaciones 1:1 como 1:N y también
         para N:N en caso de que tengamos una para actualizar.*/
+
+
+        /*BORRADO DE REGISTROS*/
+
+        /*Vamos a trabajar dos tipos de borrado: Borrado Normal y Borrado Lógico*/
+
+        /*Borrado Normal: Para borrar un registro primero cambiamos su status a borrado yu luego SaveChanges.*/
+
+        /*Borrado Lógico: Consiste en cambiar a true or false - 1 o 0 - el campo de tipo bit/booleano que funciona como "bandera" 
+         o "status" del registro sin eliminar el registro de la bd. */
     }
 }
