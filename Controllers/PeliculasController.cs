@@ -236,8 +236,11 @@ namespace EFCorePeliculas.Controllers
         de los valores enviados por el usuario.
         */
 
+
+        /*Insertar Registro Con Data Relacionada Existente*/
         /*Vamos a insertar peliculas con generos y salas de cines ya creados, es decir, data relacionada ya existente.
          Para ello vamos a trabajar con el Status*/
+
         [HttpPost("conDataExistente")]
         public async Task<ActionResult> Post(PeliculaCreacionDTO peliculaCreacionDTO)
         {

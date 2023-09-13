@@ -114,7 +114,59 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
-        /*Insertando Cine con Data Relacionada Existente*/
+        /*Actualizando la entidad principal junto a sus entidades relacionadas.
+        Ejemplo: Actualizar un Cine con su CineOferta al mismo tiempo, Cine con sus SalasCine, Pelicula con sus PeliculasActores, etc */
 
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(CineCreacionDTO cineCreacionDTO, int id)
+        {
+            var cineDB = await _context.Cines.AsTracking()
+                /*EL Include es improtante aca porque a traves de él EF Core va a poder decir si necesito crear una nueva sala de cine, actualizar o borrar
+                 una ya existente y lo mismo con CineOferta.
+                Tenemos que tener algo en cuenta con SalasDeCine: SalasDeCine es un listado List<>, por lo que el Include me va a permitir
+                trabajar sobre ese listado*/
+                .Include(c => c.SalasDeCine)
+                .Include(c => c.CineOferta)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if(cineDB is null)
+            {
+                return NotFound();
+            }
+
+            cineDB = _mapper.Map(cineCreacionDTO, cineDB); //Esta simple línea de código ya hace todo: crear, actualizar, modificar y borrar.
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        /*Creamos un endpoint para ver las actualizaciones/modificaciones que realizamos*/
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult>Get(int id)
+        {
+            var cineDB = await _context.Cines.AsTracking()
+               .Include(c => c.SalasDeCine)
+               .Include(c => c.CineOferta)
+               .FirstOrDefaultAsync(c => c.Id == id);
+            if (cineDB is null)
+            {
+                return NotFound();
+            }
+
+            cineDB.Ubicacion = null; //Esto lo colocamos simplemente para no tener problemas con la ubicación
+            return Ok(cineDB);
+        }
+
+        /*Al ejecutar el endpoint podemos observar lo siguiente: 
+         Si insertamos datos de sala de cine pero no insertamos su campo id, EF Core va a interpretar que estamos creando
+        una nueva sala de cine por lo que creará una nueva sala de cine. Podemos corroborarlo en Management Studio haciendo un
+        count(id) de salas de cine o viendo cual es el último id antes de ejecutar el endpoint. Como vemos, podemos actualizar un cine
+        cambiando su nombre, borrar alguna de sus salas, actualizar su oferta e inclusive agregar una sala de cine nueva que no existe
+        previamente. Es muy loco*/
+
+        /*Podemos observar que al hacer el truco aprendido hace todo por nosotros de una forma sencilla sin complicarla. Con tan solo
+         utilizar los Include y luego el AutoMapper todo se hace se manera resumida, tanto para relaciones 1:1 como 1:N y también
+        para N:N en caso de que tengamos una para actualizar.*/
     }
 }

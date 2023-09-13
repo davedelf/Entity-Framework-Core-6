@@ -136,5 +136,8 @@ namespace EFCorePeliculas.Controllers
          es eficiente en el sentido de que solamente actualiza aquellas propiedades/campos que fueron modificados/actualizados mientras
         que el modelo desconectado actualiza todo incluso si vuelvo a mandar lo mismo (los mismos datos/valores)
         Resumen: Modelo Conectado (actualiza solo que se se modifica) y Modelo Desconectado (actualiza todo)*/
+
+
+        
     }
 }
