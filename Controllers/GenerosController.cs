@@ -146,7 +146,32 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
-        
+        /*Vamos a ver como actualizar registros con el modelo conectado. Recordamos que cuando hablamos de modelo conectado
+        estamos diciendo que la entidad a actualizar va a ser cargada por el mismo DbContext, es decir, ambas operaciones
+        seran realizadas por la misma instancia de DbContext*/
+        /*El primer ejemplo simple consiste en agregar un número 2 al final del género*/
 
+        [HttpPost("agregar2")]
+        public async Task<ActionResult> Agregar2(int id)
+        {
+            /*Colocamos AsTracking ya que por defecto tenemos configurado AsNoTracking a nivel global por defecto*/
+            var genero = await _context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Id ==id);
+
+            if(genero == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                genero.Nombre += "2";
+            }
+
+           await _context.SaveChangesAsync();
+           return Ok();
+
+            /*Es conectado porque estoy usando el mismo DbContext tanto para cargar el género como para actualizarlo-grabarlo*/
+
+
+        }
     }
 }

@@ -73,5 +73,34 @@ namespace EFCorePeliculas.Controllers
             await _context.SaveChangesAsync();
             return Ok(actor);
         }
+
+        /*Ahora un ejemplo más realista: Necesitamos actualizar los campos del Actor con modelo conectado. Para eso
+        vamos a usar AutoMapper*/
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult>Put(ActorCreacionDTO actorCreacionDTO, int id)
+        {
+            /*Traigo el actor de la base de datos*/
+
+            var actorDb= await _context.Actores.AsTracking().FirstOrDefaultAsync(a=>a.Id==id);
+
+            if(actorDb is null)
+            {
+                return NotFound();
+            }
+
+            /*Truco: Recordamos que AutoMapper nos permite mapear de un tipo de objeto a otro, entonces acá estoy mapeando
+             de actorCreacionDTO a actorDB. Esto quiere decir, por ejemplo, que si actorCreacionDTO viene con un nombre nuevo
+             y actorDb tiene el nombre anterior entonces el mapeo va a colocar/reemplazar ese nombre viejo por el nuevo en actorDb.
+             Unificamos (reutilizamos) la misma instancia actorDb para que automapper conserve la misma instancia en memoria, es decir 
+             que solamente estamos modificando las propiedades de actorDb y no estamos cambiando la instancia de actorDb.
+             Esto es muy util porque así EF Core le puede seguir dando seguimiento a esa instancia de la clase Actor. De este modo va a saber
+             que el status de actorDb va a ser modificado y si el status es modificado, al yo decir SaveChangesAsync se van a replicar los cambios
+             en la base de datos.*/
+            actorDb = _mapper.Map(actorCreacionDTO, actorDb);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }
