@@ -102,5 +102,39 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
+        /*Modelo Desconectado*/
+
+        /*Consiste en que vamos a utilizar un contexto distinto para la creacion de la instancia de la entidad con respecto al DbContext
+         que va a ser utilizado para actualizar la entidad, es decir, con un DbContext cargo la entidad y con otro DbContext (otra instancia)
+        realizo la operación de actualización.*/
+
+        [HttpPut("desconectado/{id:int}")]
+        public async Task<ActionResult> PutDesconectado(ActorCreacionDTO actorCreacionDTO, int id)
+        {
+            var existeActor=await _context.Actores.AnyAsync(a=>a.Id==id);
+
+            if(!existeActor)
+            {
+                return NotFound();
+            }
+
+            var actor = _mapper.Map<Actor>(actorCreacionDTO);
+            actor.Id = id;
+
+            /*El Update me permite marcar el objeto como modificado, pues significa que el status modificado, en la base de datos,
+             hay un registro que representa a este objeto y sus propiedades han sido modificadas y por lo tanto ante el siguiente
+            SaveChanges el resgistro de la bd debe ser actualizado.*/
+            _context.Update(actor);
+
+            /*Entonces ahora se actualiza el registro en la base de datos.*/
+            await _context.SaveChangesAsync();
+            return Ok();
+
+        }
+
+        /*Una diferencia importante entre el modelo conectado y el desconectado a la hora de actualizar es que el modelo conectado
+         es eficiente en el sentido de que solamente actualiza aquellas propiedades/campos que fueron modificados/actualizados mientras
+        que el modelo desconectado actualiza todo incluso si vuelvo a mandar lo mismo (los mismos datos/valores)
+        Resumen: Modelo Conectado (actualiza solo que se se modifica) y Modelo Desconectado (actualiza todo)*/
     }
 }
