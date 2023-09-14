@@ -248,6 +248,33 @@ namespace EFCorePeliculas.Controllers
          aparecer cuando realizamos la petición Get mediante su id o consultamos todos los géneros. Cuando estaba dado de baja
          e intentabamos traerlo por su id nos arrojaba Error 404 pero al restaurarlo mediante el Post volvemos a intentar traerlo
          y ahora nos lo devuelve con su respectivo Código 200-*/
+
+
+
+
+        /*RESUMEN DE SECCIÓN 4: CRUD*/
+
+      /*Modelo Conectado: Es cuando el DbContext que carga una entidad es el mismo que usamos para editarla.
+       
+        Modelo Desconectado: Es cuando intentamos editar una entidad utilizando un DbContext distinto al que la ha cargado.
+
+        Add: Usamos ese método para cambiar el status de la entidad en memoria, para que cuando utilicemos Savechanges la entidad sea insertada
+        en la base de datos.
+
+        Mapeo Flexible: Nos sirve para poder mapear un campo a una columna, en vez de una propiedad a una columna. Esto nos da la flexibilidad de poder
+        realizar transformaciones a la data antes de insertarla en la bd.
+
+        Update: Podemos marcar un registro como modificado, lo que significa que cuando ejecutemos SaveChanges EF Core se va a encargar de actualizar el registro
+        correspondiente en la bd. Esta es la forma en la cual actualizamos un registro utilizando Modelo Desconectado. En el caso de Modelo Conectado no es necesario
+        utilizar la función update, sino que podemos actualizar las propiedades de la entidad y al utilizar SaveChanges los campos modificados serán persistidos en la bd.
+
+        Remove: Podemos actualizar el status de una entidad a borrada, para que cuando ejecutemos SaveChanges el registro en la bd sea eliminado. 
+
+        Borrado Lógico o Suave: Nos permite marcar un registro como borrado pero sin realmente removerlo de la tabla. Esto es útil cuando queremos permitir
+        una funcionalidad de borrado pero cuando necesitamos conservar la data para uso futuro (ej.: historial).
+
+        Filtros a Nivel del Modelo: Lo utilizamos para configurar filtros por defecto en nuestras entidades. Podemos saltarnos dichos filtros en los queries querramos.
+      */
     }
 
 }
