@@ -293,6 +293,8 @@ namespace EFCorePeliculas.Controllers
 
         Filtros a Nivel del Modelo: Lo utilizamos para configurar filtros por defecto en nuestras entidades. Podemos saltarnos dichos filtros en los queries querramos.
       */
+
+
     }
 
 }

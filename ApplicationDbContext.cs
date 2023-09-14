@@ -48,11 +48,15 @@ namespace EFCorePeliculas
 
             /*Lo que se refiere a Assembly es "escanea todo este proyecto y toma todas esas clases
              que heredan de IEntityTypeConfiguration y aplícalas en nuestro API Fluente*/
-            
+
             /*De esta forma nos queda más compacto y más bonito-ordenado*/
 
             /*Misma configuración que en la entidad (anotación) pero a nivel convención*/
             //modelBuilder.Entity<Log>().Property(l=>l.Id).ValueGeneratedNever();
+
+            /*Para ignorar siempre la clase Direccion*/
+
+            modelBuilder.Ignore<Direccion>();
             
         }
 

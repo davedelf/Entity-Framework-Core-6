@@ -18,6 +18,10 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             /*Acá indicamos que la propiedad Nombre tiene el Campo _nombre*/
             builder.Property(x => x.Nombre).HasField("_nombre");
 
+
+            builder.Ignore(a => a.Edad);
+
+            builder.Ignore(a => a.Direccion);
         }
     }
 }

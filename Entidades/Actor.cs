@@ -1,4 +1,6 @@
-﻿namespace EFCorePeliculas.Entidades
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EFCorePeliculas.Entidades
 {
     public class Actor
     {
@@ -51,5 +53,49 @@
          Ya que en C# Datetime es un tipo de valor, este no puede aceptar valores nulos por defecto. Para que lo acepte basta con agregar
          ? al lado del tipo de dato. Entonces quedaría Datetime?
          */
+
+
+        /*Siempre que agreguemos una propiedad a una entidad ésta se mapea a alguna columna en la tabla correspondiente, sin embargo
+         podría haber ocasiones en la que no querramos esto. Quizas tengamos propieades de utilidad que devuelven data que no queremos en la base de datos
+        por ejemplo, digamos que queremos un campo Edad en nuestra entidad Actor, sin embargo, dicho campo se va a calcular en base a la propiedad fecha de nacimiento
+        (recordemos que en la base de datos NO SE ALMACENAN DATOS CALCULABLES, por lo tanto no tiene sentido guardarlo en la tabla, ya que es un dato que puede obtenerse
+        a partir de otro que ya existe. Para ello usamos un atributo llamado [NotMapped])*/
+
+        [NotMapped]
+        public int? Edad
+        {
+            get
+            {
+               if(!FechaNacimiento.HasValue)
+               {
+                    return null;
+               }
+
+                var fechaNacimiento = FechaNacimiento.Value;
+                var edad = DateTime.Today.Year - fechaNacimiento.Year;
+
+                //Si estamos antes del día de su cumpleaños entonces le restamos 1 al año
+               if(new DateTime(DateTime.Today.Year, fechaNacimiento.Month, fechaNacimiento.Day) > DateTime.Today)
+               {
+                    edad--;
+               }
+                return edad;
+            }
+        }
+
+        /*Entonces con ese [NotMapped] el campo edad no se va a agregar en la tabla correspondiente. Inclusive si creamos una migración
+         y luego aplicamos update veremos que no se agrega el campo a la base de datos.*/
+
+        /*Recordemos que por normalizacón de base de datos no se almacenan datos calculables.*/
+
+        /*Otra forma de ignorar esta propiedad es utilizando el API Fluente. Para ello configuramos en ActorConfig
+         builder.Ignore(a => a.Edad); */
+
+        /*Además de ignorar propiedades también podemos ignorar Clases. Vamos a crear a modo de ejemplo la clase Direccion (ojo,
+         en este caso a modo de ejemplo la clase Direccion no es una entidad ya que no corresponde a ninguna tabla de la base de datos.)*/
+
+        public Direccion Direccion { get; set; }
+
+        /*Hacemos lo mismo en ActorConfig para ignorar dicha propiedad/clase*/
     }
 }
