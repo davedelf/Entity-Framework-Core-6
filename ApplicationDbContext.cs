@@ -50,6 +50,9 @@ namespace EFCorePeliculas
              que heredan de IEntityTypeConfiguration y aplícalas en nuestro API Fluente*/
             
             /*De esta forma nos queda más compacto y más bonito-ordenado*/
+
+            /*Misma configuración que en la entidad (anotación) pero a nivel convención*/
+            //modelBuilder.Entity<Log>().Property(l=>l.Id).ValueGeneratedNever();
             
         }
 
@@ -62,6 +65,7 @@ namespace EFCorePeliculas
         public DbSet<CineOferta> CinesOfertas { get; set; }
         public DbSet<SalaDeCine> SalasDeCine { get; set; }
         public DbSet<PeliculaActor> PeliculasActores { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
 
 

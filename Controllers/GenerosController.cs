@@ -19,6 +19,24 @@ namespace EFCorePeliculas.Controllers
         [HttpGet]
         public async Task<IEnumerable<Genero>> Get()
         {
+            //Esto (a modo de ejemplo) lo que hace es crear un registro log al ejecutar el endpoint Get. Si consultamos la tabla
+            // Logs en Management Studio veremos que el registro log se crea cada vez que ejecutamos el endpoint y su id se compone de
+            // una cadena de caracteres o string irrepetible.
+
+            _context.Logs.Add(new Log() 
+            { 
+                //Id=new Guid(),
+                Mensaje = "Ejecutando el método GenerosController.Get"
+            });
+
+            /*Sin embargo no es conveniente configurar manualmente la instancia de GUID ya que puede entrar en conflicto a la hora de almacenarse,
+             ya que la misma base de datos lo genera de manera secuencial bajo un determinado patrón de su motor. Conclusión: con configurarlo manualmente
+            y dejar que la base de datos lo genere ella misma. Por lo tanto, conviene revertir los cambios y solamente asignar el tipo de dato Guid a la propiedad
+            en la entidad.
+            Si ejecutamos el endpoint con las configuraciones de crear manualmente el Guid veremos que en la bd se genera el id 
+            00000000-0000-0000-0000-000000000000, pero si volvemos a ejecutar el endpoint nos dará Error 500 especificando que el id está duplicado
+            o ya ha sido creado. Es por ello que conviene dejar que la bd lo genere solo.*/
+            await _context.SaveChangesAsync();
             return await _context.Generos.OrderBy(g=>g.Nombre).ToListAsync();
 
             /*Optimización de Queries*/

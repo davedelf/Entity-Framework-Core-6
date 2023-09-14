@@ -198,6 +198,24 @@ namespace EFCorePeliculas.Controllers
          API Fluente: Se configura en un método llamado OnModelCreating de la clase DbContext. Vimos un ejemplo de esto cuando configuramos
         que el campo nombre de un actor iba a ser requerido y de longitud máxima 150 caracteres. Esta es la forma más poderosa de realizar configuraciones.
         Utilizando el API Fluente tenemos acceso a todas las configuraciones posibles de EF Core mientras que en otras formas de configuracion
-        no siempore tenemos todas las opciones de configuración disponibles.*/
+        no siempre tenemos todas las opciones de configuración disponibles.
+        
+        Tip/Nemotécnica: 
+        
+         Convenciones --> ApplicationDbContext
+         Anotaciones de Datos -->  Entidad
+         API Fluente -- > EntidadConfig*/
+
+
+        /*Llaves Primarias*/
+
+        /*Hemos visto que podemos establecer llaves primarias con el tipo de dato int, pero también podemos asignar otro tipo de dato.
+         Es asi el caso de GUID (Global Unique Identifier) el cual consiste en un string aleatorio el cual virtualmente es imposible 
+        repetir, caso contrario a los int, en el escenario de que trabajemos con diferentes bases de datos los ids serán los mismos por 
+        lo que podrían entrar en conflicto. Es por ello que se implementa GUID como pk, ya que el mismo es único tanto en la misma base de datos
+        como entre varias.
+        Para demostar este ejemplo crearemos la clase Log para almacenar mensajes, sin embargo, estos logs podríamos fusionarlos con otros
+        logs que tengamos de otras aplicaciones. Entonces para no tener datos repetidos utilizamos Guid como tipo de dato para la clave primaria.*/
+
     }
 }
