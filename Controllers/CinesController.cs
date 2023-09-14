@@ -178,5 +178,26 @@ namespace EFCorePeliculas.Controllers
 
         /*Borrado Lógico: Consiste en cambiar a true or false - 1 o 0 - el campo de tipo bit/booleano que funciona como "bandera" 
          o "status" del registro sin eliminar el registro de la bd. */
+
+
+        /*MODOS DE CONFIGURACIÓN*/
+
+        /*Cuando hablamos de configuraciones nos referimos a definir el comportamiento de EF Core ante determinadas situaciones,
+         por ejemplo, que si un campo se llama Id entonces será llave primaria o que si un campo es DateTime en C# se mapee a Date 
+        de Sql Server. En general tenemos tres formas de hacer configuraciones en EF Core: Por Convención, Por Anotaciones de Datos
+        y por el API Fluente.
+        
+         Convenciones: Funciona en base a los estilos de código que utilicemos en nuestra aplicación. Un ejemplo es el del campo Id.
+        si tenemos un campo con ese nombre entonces por defecto será llave primaria. Esto es un ejemplo de conveción ya que con el simple
+        hecho del nombre EF Core toma una decisión acerca de sus características. A partir de EF Core 6 podemos configurar nuestras propias
+        convenciones con ConfigConventions. Con esta función pudimos indicar que un campo DateTime iba a mapear a un Date en Sql Server .
+        
+         Anotaciones de Datos: Se refierea los atributos que colocamos encima de entidades y propiedades. Un ejemplo es cuando en la clase Género
+        marcamos el campo Id con el atributo [Key].
+        
+         API Fluente: Se configura en un método llamado OnModelCreating de la clase DbContext. Vimos un ejemplo de esto cuando configuramos
+        que el campo nombre de un actor iba a ser requerido y de longitud máxima 150 caracteres. Esta es la forma más poderosa de realizar configuraciones.
+        Utilizando el API Fluente tenemos acceso a todas las configuraciones posibles de EF Core mientras que en otras formas de configuracion
+        no siempore tenemos todas las opciones de configuración disponibles.*/
     }
 }
