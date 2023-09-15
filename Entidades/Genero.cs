@@ -1,10 +1,16 @@
-﻿using System.Reflection;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace EFCorePeliculas.Entidades
 {
-    //Para que esta clase represente una tabla en la base de datos debemos colocarla como propiedad DBSet en el DBContext
+        /*Supongamos que queremos colocar un índice único para la columna Nombre de la tabla Géneros.Notas que debemos colocar
+         la configuración a nivel namespace y no dentro de la clase*/
+     [Index(nameof(Nombre), IsUnique = true)]
+     /*Esto me garantiza de que no va a haber dos géneros con el mismo nombre. Podemos hacer esta misma configuración en el 
+      API Fluente en el archivo GeneroConfig*/
     public class Genero
     {
+        //Para que esta clase represente una tabla en la base de datos debemos colocarla como propiedad DBSet en el DBContext
         public int Id { get; set; }
         public string Nombre { get; set; }
         public bool EstaBorrado { get; set; }

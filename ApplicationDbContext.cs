@@ -72,6 +72,19 @@ namespace EFCorePeliculas
         public DbSet<Log> Logs { get; set; }
 
 
+        /*ÍNDICES*/
+
+        /*Podemos crear índices en nuestras tablas para aumentar la velocidad de ciertas consultas. Esto es importante cuando tenemos 
+         bases de datos masivas las cuales no es viable hacer un fullscan o búsqueda completa cada vez que hagamos un query, es más
+        rápido auxiliarse de índices para realizar búsquedas. Además los índices pueden ser configurados como únicos en el sentido de que
+        nos garantizan que otra fila no va a tener el mismo valor, por ejemplo, si tenemos un campo Email y queremos que dicho campo no se 
+        repita en toda la tabla podemos configurar un índice único para evitar esta repetición y para acelerar la velocidad de las búsquedas 
+        por dicho campo de Email.
+        En teoría ya hemos utilizado índices, pues las claves primarias son automáticamente configuradas como índices únicos, sin embargo podemos tener
+        otros campos, además de la clave primaria, configurados como índices. Vemos un ejemplo en la tabla Géneros*/
+        
+
+
 
     }
 }

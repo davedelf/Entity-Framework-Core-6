@@ -148,13 +148,23 @@ namespace EFCorePeliculas.Controllers
         {
             /*En la siguiente linea lo que estamos haciendo es cambiar el status de la entidad género. No es que ya s eva a agregar
              a la bd sino que está marcando ese objeto como próximo a agregar para cuando ejecutemos la función SaveChanges se agregue a la bd.*/
-            _context.Add(genero);
 
             /*Con el Savechanges EF Core va a chequear todos los objetos con seguimiento, va a verificar su status y con dicho status
              va a realizar algo. En la linea anterior el objeto genero está marcado como agregado, entonces SaveChanges lo va a agregar a la bd.*/
-            await _context.SaveChangesAsync();
 
+            /*SI queremos evitar el código 500 al agregar un registro duplicado (el caso del campo Nombre que funciona como índice) podemos agregar la siguiente validación:*/
+
+            var existeGeneroConNombre=await _context.Generos.AnyAsync(g=>g.Nombre==genero.Nombre);
+
+            if (existeGeneroConNombre)
+            {
+                return BadRequest("Ya existe un género con ese nombre: " + genero.Nombre);
+            }
+            _context.Add(genero);
+            await _context.SaveChangesAsync();
             return Ok();
+
+            /*Y si intentamos agregar nuevamente un genero con el mismo nombre ahora recibimos un Error 400*/
         }
 
         [HttpPost("postMultiple")]
