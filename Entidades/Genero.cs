@@ -5,7 +5,7 @@ namespace EFCorePeliculas.Entidades
 {
         /*Supongamos que queremos colocar un índice único para la columna Nombre de la tabla Géneros.Notas que debemos colocar
          la configuración a nivel namespace y no dentro de la clase*/
-     [Index(nameof(Nombre), IsUnique = true)]
+     //[Index(nameof(Nombre), IsUnique = true)]
      /*Esto me garantiza de que no va a haber dos géneros con el mismo nombre. Podemos hacer esta misma configuración en el 
       API Fluente en el archivo GeneroConfig*/
     public class Genero
@@ -88,5 +88,13 @@ namespace EFCorePeliculas.Entidades
         la columna NombreGenero hará referencia al atributo o propertie Genero en lugar de llamarse como el mismo.
         A su vez, el esquema en lugar de llamarse dbo. se llamará peliculas.
         */
+
+        /*ÍNDICES CON FILTROS*/
+
+        /*Supongamos el siguiente escenario: Previamente colocamos en géneros el índice sobre el campo Nobre por lo que no pueden existir dos géneros con el mismo nombre
+         ya que éste funciona como identificador. Si recordamos utilizamos la técnica del borrado lógico (soft delete) y no el borrado permanente (hard deletete) ya que podríamos 
+        necesitar realizar un historial para luego acceder a la data. Ahora bien, tneiendo en cuenta este escenario podríamos dar de baja un género y después querer agregar otro con el 
+        mismo nombre pero nos arrojaría error ya que se duplicaría (estamos aplicando borrado lógico, por lo que en realidad no se está borrando el registro). Para evitar
+        esto aplciamos la técnica de Índices Con Filtros. Vamos al API Fluente y colocamos .HasFilter()*/
     }
 }

@@ -25,7 +25,7 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             //o es lo mismo decir: builder.HasQueryFilter(g=>!g.EstaBorrado);
 
             /*Acá indico lo mismo que en la clase Género; el campo Nombre es único por lo que no pueden existir dos géneros con el mismo nombre*/
-            //builder.HasIndex(g => g.Nombre).IsUnique();
+            builder.HasIndex(g => g.Nombre).IsUnique().HasFilter("EstaBorrado = 'false'");
         }
     }
 }
