@@ -12,7 +12,12 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             /*A la hora de realizar la migración, el valor por defecto que se agrega a TipoSalaDeCine es 0. Podemos cambiar dicho valor
              directamente especificando el valor que se agregará. En este caso todas las salas de cine se crearan por defecto con el valor
             asociado a DosDimensiones, que es 1. Ahora vemos que en la migración el defaultValue es 1*/
-            builder.Property(prop => prop.TipoSalaDeCine).HasDefaultValue(TipoSalaDeCine.DosDimensiones);
+            builder.Property(prop => prop.TipoSalaDeCine)
+                .HasDefaultValue(TipoSalaDeCine.DosDimensiones)
+
+                //Con esta simple línea ya estamos indicando la conversión. En la bd se guardará como string y cuando se levante de ella
+                //autómáticamente se convertira en enum.
+                .HasConversion<string>();
         }
     }
 }
