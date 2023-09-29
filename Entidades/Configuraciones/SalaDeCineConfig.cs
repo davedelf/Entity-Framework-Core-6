@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCorePeliculas.Entidades.Conversiones;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.Reflection.Emit;
 
@@ -18,6 +19,10 @@ namespace EFCorePeliculas.Entidades.Configuraciones
                 //Con esta simple línea ya estamos indicando la conversión. En la bd se guardará como string y cuando se levante de ella
                 //autómáticamente se convertira en enum.
                 .HasConversion<string>();
+
+            //Configuro el mapeo de moneda
+            builder.Property(prop => prop.Moneda)
+                .HasConversion<MonedaASimboloConverter>();
         }
     }
 }

@@ -70,7 +70,7 @@ namespace EFCorePeliculas.Controllers
 
             var cine = new Cine()
             {
-                Nombre = "Mi Cine",
+                Nombre = "Mi Cine con Monedas",
                 Ubicacion = ubicacionCine,
                 CineOferta = new CineOferta()
                 {
@@ -83,12 +83,14 @@ namespace EFCorePeliculas.Controllers
                     new SalaDeCine()
                     {
                         Precio=200,
+                        Moneda=Moneda.PesoArgentino,
                         TipoSalaDeCine=TipoSalaDeCine.DosDimensiones,
 
                     },
                     new SalaDeCine()
                     {
                         Precio=350,
+                        Moneda=Moneda.Dolar,
                         TipoSalaDeCine=TipoSalaDeCine.TresDimensiones,
 
                     }
