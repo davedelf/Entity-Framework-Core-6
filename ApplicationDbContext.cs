@@ -1,5 +1,6 @@
 ﻿using EFCorePeliculas.Entidades;
 using EFCorePeliculas.Entidades.Configuraciones;
+using EFCorePeliculas.Entidades.SinLlaves;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -57,6 +58,13 @@ namespace EFCorePeliculas
             /*Para ignorar siempre la clase Direccion*/
 
             modelBuilder.Ignore<Direccion>();
+            //Acá centralizamos el Select en el API Fluente
+            //El .ToView(null) es para que no se nos agregue una tabla en bd sin ubicación.
+            modelBuilder.Entity<CineSinUbicacion>()
+                .HasNoKey()
+                .ToSqlQuery("Select Id, Nombre FROM Cines")
+                .ToView(null);
+            //Si no queremos utilizar la notación [Keyless] en la entidad podemos colocar acá .HasNoKey()
             
         }
 

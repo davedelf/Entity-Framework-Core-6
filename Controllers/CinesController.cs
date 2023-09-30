@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using EFCorePeliculas.DTOs;
 using EFCorePeliculas.Entidades;
+using EFCorePeliculas.Entidades.SinLlaves;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -20,6 +21,16 @@ namespace EFCorePeliculas.Controllers
         { 
             _context= context;
             _mapper= mapper;
+        }
+
+        [HttpGet("SinUbicacion")]
+        public async Task<IEnumerable<CineSinUbicacion>> GetCinesSinUbicacion()
+        {
+            return await _context.Set<CineSinUbicacion>().ToListAsync();
+            //Si no queremos utilizar el .Set podemos ir al ApplicationDbContext y crear un DbSet, que en este caso sería
+            // public DbSet<CineSinUbicacion> CinesSinUbicacion{get; set;}
+
+            /*Y la línea de arriba la comentamos y queda return await _context.CinesSinUbicacion.ToListAsync()*/
         }
 
         /*CONSULTANDO DATOS ESPACIALES*/
