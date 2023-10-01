@@ -65,6 +65,8 @@ namespace EFCorePeliculas
                 .ToSqlQuery("Select Id, Nombre FROM Cines")
                 .ToView(null);
             //Si no queremos utilizar la notación [Keyless] en la entidad podemos colocar acá .HasNoKey()
+
+            modelBuilder.Entity<PeliculaConConteos>().HasNoKey().ToView("PeliculasConConteos");
             
         }
 

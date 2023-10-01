@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using EFCorePeliculas.DTOs;
 using EFCorePeliculas.Entidades;
+using EFCorePeliculas.Entidades.SinLlaves;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -263,6 +264,13 @@ namespace EFCorePeliculas.Controllers
             _context.Add(pelicula);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpGet("PeliculasConConteos")]
+        public async Task<ActionResult<IEnumerable<PeliculaConConteos>>> GetPeliculasConConteos()
+        {
+            //Recordemos que el Set es para crear el DbSet, podemos obviar esta línea creando el dbset en el API Fluente
+            return await _context.Set<PeliculaConConteos>().ToListAsync();
         }
 
       
