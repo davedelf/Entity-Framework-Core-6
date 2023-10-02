@@ -37,7 +37,8 @@ namespace EFCorePeliculas.Controllers
             00000000-0000-0000-0000-000000000000, pero si volvemos a ejecutar el endpoint nos dará Error 500 especificando que el id está duplicado
             o ya ha sido creado. Es por ello que conviene dejar que la bd lo genere solo.*/
             await _context.SaveChangesAsync();
-            return await _context.Generos.OrderBy(g=>g.Nombre).ToListAsync();
+            //Usamos la propiedad sombra para ordernar los resultados por fecha de creación.
+            return await _context.Generos.OrderByDescending(g=>EF.Property<DateTime>(g,"FechaCreacion")).ToListAsync();
 
             /*Optimización de Queries*/
 
@@ -78,17 +79,22 @@ namespace EFCorePeliculas.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genero>> Get(int id)
         {
-            var genero=await _context.Generos.FirstOrDefaultAsync(g=>g.Id==id);
+            var genero=await _context.Generos.AsTracking().FirstOrDefaultAsync(g=>g.Id==id);
 
             if(genero == null)
             {
                 return NotFound();
 
             }
-            else
+
+            var fechaCreacion = _context.Entry(genero).Property<DateTime>("FechaCreacion").CurrentValue;
+            return Ok(new
             {
-                return genero;
-            }
+                Id = genero.Id,
+                Nombre = genero.Nombre,
+                fechaCreacion
+            }) ;
+            
         }
 
         [HttpGet]

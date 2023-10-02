@@ -108,6 +108,11 @@ namespace EFCorePeliculas.Migrations
                     b.Property<bool>("EstaBorrado")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("FechaCreacion")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GetDate()");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(150)
@@ -231,6 +236,26 @@ namespace EFCorePeliculas.Migrations
                     b.ToView(null);
 
                     b.ToSqlQuery("Select Id, Nombre FROM Cines");
+                });
+
+            modelBuilder.Entity("EFCorePeliculas.Entidades.SinLlaves.PeliculaConConteos", b =>
+                {
+                    b.Property<int>("CantidadActores")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CantidadCines")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CantidadGeneros")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titulo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToView("PeliculasConConteos");
                 });
 
             modelBuilder.Entity("GeneroPelicula", b =>

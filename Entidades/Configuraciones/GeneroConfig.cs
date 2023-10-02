@@ -26,6 +26,12 @@ namespace EFCorePeliculas.Entidades.Configuraciones
 
             /*Acá indico lo mismo que en la clase Género; el campo Nombre es único por lo que no pueden existir dos géneros con el mismo nombre*/
             builder.HasIndex(g => g.Nombre).IsUnique().HasFilter("EstaBorrado = 'false'");
+
+            /*Propiedad Sombra*/
+
+            /*Util cuando queremos crear una columna o traer data de la bd sin afectar a la entidad principal (Género)*/
+
+            builder.Property<DateTime>("FechaCreacion").HasDefaultValueSql("GetDate()").HasColumnType("datetime2");
         }
     }
 }
