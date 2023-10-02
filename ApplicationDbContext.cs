@@ -67,6 +67,22 @@ namespace EFCorePeliculas
             //Si no queremos utilizar la notación [Keyless] en la entidad podemos colocar acá .HasNoKey()
 
             modelBuilder.Entity<PeliculaConConteos>().HasNoKey().ToView("PeliculasConConteos");
+
+            //Automatizando Configuraciones en el API Fluente
+            foreach(var tipoEntidad in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var propiedad in tipoEntidad.GetProperties())
+                {
+                    if(propiedad.ClrType==typeof(string) && propiedad.Name.Contains("URL", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        propiedad.SetIsUnicode(false);
+                        propiedad.SetMaxLength(500);
+                    }
+                }
+            }
+            /*Este tipo de configuracion va a tomar todos los modelos de la app, no importa cual sea. Estos tipos de configuraciones son útiles cuando tenemos
+             aplicaciones grandes o muchos modelos. Lo que hestamos haciendo en esta configuración es que lea cada propiedad de cada modelo, se fije si es string y si su nombre
+             es o contiene URL. En ese caso, no importa si está en mayúscula o minúscula, no lo convierte a Unicode.*/
             
         }
 

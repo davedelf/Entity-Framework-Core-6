@@ -97,5 +97,7 @@ namespace EFCorePeliculas.Entidades
         public Direccion Direccion { get; set; }
 
         /*Hacemos lo mismo en ActorConfig para ignorar dicha propiedad/clase*/
+
+        public string FotoURL { get; set; }
     }
 }
