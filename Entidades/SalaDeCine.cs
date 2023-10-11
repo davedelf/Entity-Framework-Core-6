@@ -1,4 +1,6 @@
-﻿namespace EFCorePeliculas.Entidades
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EFCorePeliculas.Entidades
 {
     public class SalaDeCine
     {
