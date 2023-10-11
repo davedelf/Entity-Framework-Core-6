@@ -81,7 +81,7 @@ namespace EFCorePeliculas.Controllers
 
             var cine = new Cine()
             {
-                Nombre = "Mi Cine con Monedas",
+                Nombre = "Mi Cine con Relación Opcional",
                 Ubicacion = ubicacionCine,
                 CineOferta = new CineOferta()
                 {
@@ -113,6 +113,8 @@ namespace EFCorePeliculas.Controllers
 
             return Ok();
         }
+
+
 
         /*Insertando Cine con Data Relacionada Inexistente*/
         /*Como vemos es muy simple agregar un registro con data relacioanda simplemente agregando las propiedades
@@ -230,5 +232,24 @@ namespace EFCorePeliculas.Controllers
         Para demostar este ejemplo crearemos la clase Log para almacenar mensajes, sin embargo, estos logs podríamos fusionarlos con otros
         logs que tengamos de otras aplicaciones. Entonces para no tener datos repetidos utilizamos Guid como tipo de dato para la clave primaria.*/
 
+        //Relación Opcional
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            //El Include c=>c.CineOferta lo colocamos porque si intentamos borrar nos da error ya que no estaríamos
+            //modificando el nullable de CineOferta..
+            //Si consultamos la base de datos luego del borrado del cine veremos que el CineOferta permanece y en su campo
+            //CineId figura NULL, ya que el Cine que le correspondía se borró.
+            var cine= await _context.Cines.Include(c=>c.CineOferta).FirstOrDefaultAsync(c=> c.Id == id);
+
+            if (cine is null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(cine);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

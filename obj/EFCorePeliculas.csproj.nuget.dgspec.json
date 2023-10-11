@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\Udemy\\NetCore\\EFCorePeliculas\\EFCorePeliculas.csproj": {}
+    "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\ASP.NET\\EFCorePeliculas\\EFCorePeliculas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\Udemy\\NetCore\\EFCorePeliculas\\EFCorePeliculas.csproj": {
+    "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\ASP.NET\\EFCorePeliculas\\EFCorePeliculas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\Udemy\\NetCore\\EFCorePeliculas\\EFCorePeliculas.csproj",
+        "projectUniqueName": "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\ASP.NET\\EFCorePeliculas\\EFCorePeliculas.csproj",
         "projectName": "EFCorePeliculas",
-        "projectPath": "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\Udemy\\NetCore\\EFCorePeliculas\\EFCorePeliculas.csproj",
+        "projectPath": "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\ASP.NET\\EFCorePeliculas\\EFCorePeliculas.csproj",
         "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\Udemy\\NetCore\\EFCorePeliculas\\obj\\",
+        "outputPath": "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\ASP.NET\\EFCorePeliculas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\david\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -86,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

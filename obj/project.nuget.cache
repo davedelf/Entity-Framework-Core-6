@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4glVBdZGOuaKPom4E5oOh56Q6z6bvrMC8TbF6P3hb16I8WQ2234ibO0fuimeLqh6ybcXOYUxst1ZTU6tUdERhw==",
+  "dgSpecHash": "7xg1WB6fPysfCB64ERyuNWcXy6SCWARnbCx5Rq4sxDZqarCfKdS2/XRflOxaUSYGVB8lNlotvlYXh4yFt+o6/Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\Udemy\\NetCore\\EFCorePeliculas\\EFCorePeliculas.csproj",
+  "projectFilePath": "C:\\Users\\david\\OneDrive\\Documentos\\CURSOS\\ASP.NET\\EFCorePeliculas\\EFCorePeliculas.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\david\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\david\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

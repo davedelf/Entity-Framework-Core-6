@@ -81,7 +81,7 @@ namespace EFCorePeliculas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CineId")
+                    b.Property<int?>("CineId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("FechaFin")
@@ -97,7 +97,8 @@ namespace EFCorePeliculas.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CineId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[CineId] IS NOT NULL");
 
                     b.ToTable("CinesOfertas");
                 });
@@ -297,9 +298,7 @@ namespace EFCorePeliculas.Migrations
                 {
                     b.HasOne("EFCorePeliculas.Entidades.Cine", null)
                         .WithOne("CineOferta")
-                        .HasForeignKey("EFCorePeliculas.Entidades.CineOferta", "CineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EFCorePeliculas.Entidades.CineOferta", "CineId");
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.PeliculaActor", b =>
