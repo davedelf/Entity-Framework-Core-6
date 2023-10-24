@@ -17,6 +17,14 @@ namespace EFCorePeliculas.Entidades.Configuraciones
                 .HasForeignKey<CineOferta>(co => co.CineId);
 
             //Un Cine tiene un cineOferta - HasOne - y un CineOferta tiene un Cine - WithOne -
+
+            //Configuración 1:N entre Cine y SalasDeCine con API Fluente
+
+            builder.HasMany(c => c.SalasDeCine)
+                .WithOne(s => s.Cine)
+                .HasForeignKey(s => s.CineId);
+
+            //Un Cine tiene varias SalasDeCine mientras que una SalaDeCine tiene solo un Cine
         }
     }
 }
