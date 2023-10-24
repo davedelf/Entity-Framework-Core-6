@@ -1,5 +1,6 @@
 ﻿using EFCorePeliculas.Entidades;
 using EFCorePeliculas.Entidades.Configuraciones;
+using EFCorePeliculas.Entidades.Seeding;
 using EFCorePeliculas.Entidades.SinLlaves;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -83,6 +84,8 @@ namespace EFCorePeliculas
             /*Este tipo de configuracion va a tomar todos los modelos de la app, no importa cual sea. Estos tipos de configuraciones son útiles cuando tenemos
              aplicaciones grandes o muchos modelos. Lo que hestamos haciendo en esta configuración es que lea cada propiedad de cada modelo, se fije si es string y si su nombre
              es o contiene URL. En ese caso, no importa si está en mayúscula o minúscula, no lo convierte a Unicode.*/
+
+            SeedingPersonaMensaje.Seed(modelBuilder);
             
         }
 
@@ -96,6 +99,8 @@ namespace EFCorePeliculas
         public DbSet<SalaDeCine> SalasDeCine { get; set; }
         public DbSet<PeliculaActor> PeliculasActores { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Persona> Personas { get; set; }
+        public DbSet<Mensaje> Mensajes { get; set; }
 
 
         /*ÍNDICES*/
@@ -108,7 +113,7 @@ namespace EFCorePeliculas
         por dicho campo de Email.
         En teoría ya hemos utilizado índices, pues las claves primarias son automáticamente configuradas como índices únicos, sin embargo podemos tener
         otros campos, además de la clave primaria, configurados como índices. Vemos un ejemplo en la tabla Géneros*/
-        
+
 
 
 
