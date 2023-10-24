@@ -49,7 +49,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Actores");
+                    b.ToTable("Actores", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Cine", b =>
@@ -70,7 +70,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cines");
+                    b.ToTable("Cines", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.CineOferta", b =>
@@ -100,7 +100,7 @@ namespace EFCorePeliculas.Migrations
                         .IsUnique()
                         .HasFilter("[CineId] IS NOT NULL");
 
-                    b.ToTable("CinesOfertas");
+                    b.ToTable("CinesOfertas", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Genero", b =>
@@ -131,7 +131,7 @@ namespace EFCorePeliculas.Migrations
                         .IsUnique()
                         .HasFilter("EstaBorrado = 'false'");
 
-                    b.ToTable("Generos");
+                    b.ToTable("Generos", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Log", b =>
@@ -145,7 +145,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Logs");
+                    b.ToTable("Logs", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Mensaje", b =>
@@ -171,7 +171,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasIndex("ReceptorId");
 
-                    b.ToTable("Mensajes");
+                    b.ToTable("Mensajes", (string)null);
 
                     b.HasData(
                         new
@@ -230,7 +230,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Peliculas");
+                    b.ToTable("Peliculas", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.PeliculaActor", b =>
@@ -252,7 +252,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasIndex("ActorId");
 
-                    b.ToTable("PeliculasActores");
+                    b.ToTable("PeliculasActores", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Persona", b =>
@@ -268,7 +268,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Personas");
+                    b.ToTable("Personas", (string)null);
 
                     b.HasData(
                         new
@@ -312,7 +312,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasIndex("CineId");
 
-                    b.ToTable("SalasDeCine");
+                    b.ToTable("SalasDeCine", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.SinLlaves.CineSinUbicacion", b =>
@@ -360,7 +360,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasIndex("PeliculasId");
 
-                    b.ToTable("GeneroPelicula");
+                    b.ToTable("GeneroPelicula", (string)null);
                 });
 
             modelBuilder.Entity("PeliculaSalaDeCine", b =>
@@ -375,7 +375,7 @@ namespace EFCorePeliculas.Migrations
 
                     b.HasIndex("SalasDeCineId");
 
-                    b.ToTable("PeliculaSalaDeCine");
+                    b.ToTable("PeliculaSalaDeCine", (string)null);
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.CineOferta", b =>
