@@ -81,13 +81,20 @@ namespace EFCorePeliculas.Controllers
 
             var cine = new Cine()
             {
-                Nombre = "Mi Cine con OnDelete Restrict",
+                Nombre = "Mi Cine con detalle",
                 Ubicacion = ubicacionCine,
                 CineOferta = new CineOferta()
                 {
                     PorcentajeDescuento = 5,
                     FechaInicio = DateTime.Today,
                     FechaFin = DateTime.Today.AddDays(7)
+                },
+                CineDetalle=new CineDetalle
+                {
+                    Historia="Historia del cine...",
+                    CodigoDeEtica="Código de ética...",
+                    Misiones="Misiones..."
+
                 },
                 SalasDeCine = new HashSet<SalaDeCine>()
                 {
@@ -163,6 +170,8 @@ namespace EFCorePeliculas.Controllers
             var cineDB = await _context.Cines.AsTracking()
                .Include(c => c.SalasDeCine)
                .Include(c => c.CineOferta)
+                //Ejemplo de implementación de Table Splitting
+                .Include(c => c.CineDetalle)
                .FirstOrDefaultAsync(c => c.Id == id);
             if (cineDB is null)
             {

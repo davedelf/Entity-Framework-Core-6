@@ -23,6 +23,7 @@ namespace EFCorePeliculas.Entidades
          La desventaja de HashSet es que no es una lista ordenada, es decir, no ordena. Para tener una coleccion ordenada
         debemos usar ICollection o también List*/
         public  HashSet<SalaDeCine> SalasDeCine { get; set; }
+        public CineDetalle CineDetalle { get; set; }
 
     }
 }

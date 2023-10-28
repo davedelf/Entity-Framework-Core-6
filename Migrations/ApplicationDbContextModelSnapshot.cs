@@ -73,6 +73,29 @@ namespace EFCorePeliculas.Migrations
                     b.ToTable("Cines");
                 });
 
+            modelBuilder.Entity("EFCorePeliculas.Entidades.CineDetalle", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodigoDeEtica")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Historia")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Misiones")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Valores")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cines", (string)null);
+                });
+
             modelBuilder.Entity("EFCorePeliculas.Entidades.CineOferta", b =>
                 {
                     b.Property<int>("Id")
@@ -385,6 +408,17 @@ namespace EFCorePeliculas.Migrations
                     b.ToTable("PeliculaSalaDeCine");
                 });
 
+            modelBuilder.Entity("EFCorePeliculas.Entidades.CineDetalle", b =>
+                {
+                    b.HasOne("EFCorePeliculas.Entidades.Cine", "Cine")
+                        .WithOne("CineDetalle")
+                        .HasForeignKey("EFCorePeliculas.Entidades.CineDetalle", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cine");
+                });
+
             modelBuilder.Entity("EFCorePeliculas.Entidades.CineOferta", b =>
                 {
                     b.HasOne("EFCorePeliculas.Entidades.Cine", null)
@@ -478,6 +512,8 @@ namespace EFCorePeliculas.Migrations
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Cine", b =>
                 {
+                    b.Navigation("CineDetalle");
+
                     b.Navigation("CineOferta");
 
                     b.Navigation("SalasDeCine");

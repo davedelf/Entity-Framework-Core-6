@@ -28,6 +28,10 @@ namespace EFCorePeliculas.Entidades.Configuraciones
                 //relacionadas no podremos borrarlo. Usar NoAction también es válido/cumple la misma función.
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne(c => c.CineDetalle)
+                .WithOne(cd => cd.Cine)
+                .HasForeignKey<CineDetalle>(cd => cd.Id);
+
 
             //Un Cine tiene varias SalasDeCine mientras que una SalaDeCine tiene solo un Cine
         }
