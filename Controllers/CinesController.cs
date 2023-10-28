@@ -81,7 +81,7 @@ namespace EFCorePeliculas.Controllers
 
             var cine = new Cine()
             {
-                Nombre = "Mi Cine con Relación Opcional",
+                Nombre = "Mi Cine con OnDelete Restrict",
                 Ubicacion = ubicacionCine,
                 CineOferta = new CineOferta()
                 {
@@ -240,16 +240,26 @@ namespace EFCorePeliculas.Controllers
             //modificando el nullable de CineOferta..
             //Si consultamos la base de datos luego del borrado del cine veremos que el CineOferta permanece y en su campo
             //CineId figura NULL, ya que el Cine que le correspondía se borró.
-            var cine= await _context.Cines.Include(c=>c.CineOferta).FirstOrDefaultAsync(c=> c.Id == id);
+            var cine= await _context.Cines
+                .Include(c=>c.SalasDeCine)
+                .Include(c=>c.CineOferta).FirstOrDefaultAsync(c=> c.Id == id);
 
             if (cine is null)
             {
                 return NotFound();
             }
 
+            //Con esto borro las salas de cine y luego el cine. Para ello utilizo Include y RemoveRange 
+            _context.RemoveRange(cine.SalasDeCine);
+            await _context.SaveChangesAsync();
+
             _context.Remove(cine);
             await _context.SaveChangesAsync();
             return Ok();
         }
+
+        //Ejemplo del uso de OnDelete con Restrict
+
+
     }
 }

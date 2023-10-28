@@ -22,7 +22,12 @@ namespace EFCorePeliculas.Entidades.Configuraciones
 
             builder.HasMany(c => c.SalasDeCine)
                 .WithOne(s => s.Cine)
-                .HasForeignKey(s => s.CineId);
+                .HasForeignKey(s => s.CineId)
+
+                //Con esta opción estamos restringiendo el borrado del cine, es decir, si tiene salas de cine
+                //relacionadas no podremos borrarlo. Usar NoAction también es válido/cumple la misma función.
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             //Un Cine tiene varias SalasDeCine mientras que una SalaDeCine tiene solo un Cine
         }
