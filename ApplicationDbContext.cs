@@ -115,6 +115,7 @@ namespace EFCorePeliculas
         En teoría ya hemos utilizado índices, pues las claves primarias son automáticamente configuradas como índices únicos, sin embargo podemos tener
         otros campos, además de la clave primaria, configurados como índices. Vemos un ejemplo en la tabla Géneros*/
         public DbSet<CineDetalle>CineDetalles { get; set; }
+        public DbSet<Pago> Pagos { get; set; }
 
 
 

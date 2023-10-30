@@ -117,7 +117,6 @@ namespace EFCorePeliculas.Controllers
             {
                 return NotFound();
             }
-
             var actor = _mapper.Map<Actor>(actorCreacionDTO);
             actor.Id = id;
 
