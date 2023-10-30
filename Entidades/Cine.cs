@@ -24,6 +24,7 @@ namespace EFCorePeliculas.Entidades
         debemos usar ICollection o también List*/
         public  HashSet<SalaDeCine> SalasDeCine { get; set; }
         public CineDetalle CineDetalle { get; set; }
+        public Direccion Direccion { get; set; }
 
     }
 }

@@ -137,7 +137,16 @@ namespace EFCorePeliculas.Controllers
         que el modelo desconectado actualiza todo incluso si vuelvo a mandar lo mismo (los mismos datos/valores)
         Resumen: Modelo Conectado (actualiza solo que se se modifica) y Modelo Desconectado (actualiza todo)*/
 
-
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<Actor>> Get(int id)
+        {
+            var actor= await _context.Actores.FirstOrDefaultAsync(a=>a.Id==id);
+            if( actor is null)
+            {
+                return NotFound();
+            }
+            return actor;
+        }
         
     }
 }

@@ -57,6 +57,7 @@ namespace EFCorePeliculas
             //modelBuilder.Entity<Log>().Property(l=>l.Id).ValueGeneratedNever();
 
             /*Para ignorar siempre la clase Direccion*/
+            //modelBuilder.Ignore<Direccion>();
 
             modelBuilder.Ignore<Direccion>();
             //Acá centralizamos el Select en el API Fluente

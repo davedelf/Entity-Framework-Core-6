@@ -34,6 +34,17 @@ namespace EFCorePeliculas.Entidades.Configuraciones
 
 
             //Un Cine tiene varias SalasDeCine mientras que una SalaDeCine tiene solo un Cine
+
+            /*Con esto podemos configurar el nombre de las columnas que se generan al crear la migración. 
+             * Si observamos el comportamiento de la misma veremos que todo lo que respecte a la propiedad Dirección
+             * se colocará con su prefijo Direccion_/campo/ y lo mismo con BillingAdress_/campo/. Si queremos personalizar
+             dicho comportamiento podemos hacerlo con el API Fluente de la siguiente forma:*/
+            builder.OwnsOne(c => c.Direccion, dir =>
+            {
+                dir.Property(d => d.Calle).HasColumnName("Calle");
+                dir.Property(d => d.Provincia).HasColumnName("Provincia");
+                dir.Property(d => d.Pais).HasColumnName("Pais");
+            });
         }
     }
 }
