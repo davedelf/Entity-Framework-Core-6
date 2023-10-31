@@ -87,7 +87,33 @@ namespace EFCorePeliculas
              es o contiene URL. En ese caso, no importa si está en mayúscula o minúscula, no lo convierte a Unicode.*/
 
             SeedingPersonaMensaje.Seed(modelBuilder);
-            
+
+
+            modelBuilder.Entity<Merchandising>().ToTable("Merchandising");
+            modelBuilder.Entity<PeliculaAlquilable>().ToTable("PeliculasAlquilables");
+
+
+            var pelicula1 = new PeliculaAlquilable()
+            {
+                Id = 1,
+                Nombre = "Spider-Man",
+                PeliculaId = 10,
+                Precio = 5.99m
+            };
+            var merch1 = new Merchandising()
+            {
+                Id = 2,
+                DisponibleEnInventario = true,
+                EsRopa = true,
+                Nombre = "Remera",
+                Peso = 1,
+                Volumen = 1,
+            };
+
+            modelBuilder.Entity<Merchandising>().HasData(merch1);
+            modelBuilder.Entity<PeliculaAlquilable>().HasData(pelicula1);
+
+
         }
 
 
@@ -116,6 +142,7 @@ namespace EFCorePeliculas
         otros campos, además de la clave primaria, configurados como índices. Vemos un ejemplo en la tabla Géneros*/
         public DbSet<CineDetalle>CineDetalles { get; set; }
         public DbSet<Pago> Pagos { get; set; }
+        public DbSet<Producto>Productos { get; set; }
 
 
 
