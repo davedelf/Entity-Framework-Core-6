@@ -163,6 +163,9 @@ namespace EFCorePeliculas.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Ejemplo")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Mensaje")
                         .HasColumnType("nvarchar(max)");
 

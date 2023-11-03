@@ -30,6 +30,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
 
+/*Esto lo que hace es crear un contexto a partir del cual voy a poder instanciar el ApplicationDbContext, porque recordamos que el ApplicationDbContext lo estamos utilizando como un servicio, es decir que lo inyectamos a través del sistema de inyección de dependencias de .NET Core y para rescatarlo en la clase Program debo utilizar un scope*/
+
+using (var scope = app.Services.CreateScope())
+{
+    var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    /*Sabemos que la clase Program se correrá al comienzo de ejecutar la aplicación entonces colocamos:*/
+    applicationDbContext.Database.Migrate();
+
+    /*Y de esta forma vamos a poder ejecutar las migraciones al momento de cargar la aplicación*/
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

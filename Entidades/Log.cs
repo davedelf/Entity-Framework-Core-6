@@ -9,5 +9,6 @@ namespace EFCorePeliculas.Entidades
         //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid Id { get; set; }
         public string Mensaje { get; set; }
+        public string Ejemplo { get; set; }
     }
 }
