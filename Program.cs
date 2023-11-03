@@ -1,4 +1,5 @@
 using EFCorePeliculas;
+using EFCorePeliculas.CompiledModels;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -25,6 +26,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
     opciones.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
     //opciones.UseLazyLoadingProxies();
+
+    //Modelos compilados
+    //opciones.UseModel(ApplicationDbContextModel.Instance);
 });
 
 builder.Services.AddAutoMapper(typeof(Program));
