@@ -166,7 +166,16 @@ namespace EFCorePeliculas.Controllers
             {
                 return BadRequest("Ya existe un género con ese nombre: " + genero.Nombre);
             }
+            /*Ya hemos visto que podemos usar métodos como Add, Update y Remove para cambiar el status de una entidad. Sin embargo, también 
+             * podemos usar Entry para cambiar el status directamente de una entidad.*/
+
+            /*El Add lo que hace sencillamente es cambiar el status de la entidad en memoria.*/
             _context.Add(genero);
+
+            /*En lugar de hacerlo con Add lo vamos a hacer directamente. Entonces con esto estanos diciendo que el status de éste genero
+             va a ser agregado y por lo tanto cuando se ejecute el SaveChanges veremos que se agrega el género en la base de datos.*/
+
+            _context.Entry(genero).State = EntityState.Added;
             await _context.SaveChangesAsync();
             return Ok();
 
