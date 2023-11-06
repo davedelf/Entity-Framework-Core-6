@@ -9,9 +9,27 @@ namespace EFCorePeliculas
 {
     public class ApplicationDbContext : DbContext
     {
+        /*Si no queremos entrar en conflicto al utilizar la inyección de dependencias para instanciar el DbContext colocamos un constructor y en la clase Program
+         builder.Services.AddDbContext<ApplicationDbContext>();*/
+        public ApplicationDbContext()
+        {
+            
+        }
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
 
+        }
+
+        /*Para realiizar la misma configuración de inyección de dependencias pero en el mismo DbContext con el método OnConfiguring. Para no entrar en conflictos de configuración lo colocamos dentro de un condicional*/
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("name=DefaultConnection", opciones =>
+                {
+                    opciones.UseNetTopologySuite();
+                }).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            }
         }
 
         /*CONFIGURACIÓN DE CONVENCIONES*/

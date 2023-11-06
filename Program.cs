@@ -14,6 +14,8 @@ builder.Services.AddControllers()
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 /*Esto es Inyección de dependencias; nos permite acceder al ApplicationDbContext sin tener que instanciarlo*/
@@ -30,6 +32,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
     //Modelos compilados
     //opciones.UseModel(ApplicationDbContextModel.Instance);
 });
+
+//builder.Services.AddDbContext<ApplicationDbContext>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();
