@@ -19,6 +19,28 @@ namespace EFCorePeliculas
         {
 
         }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ProcesarSalvado();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ProcesarSalvado()
+        {
+            foreach(var item in ChangeTracker.Entries().Where(e=>e.State== EntityState.Added && e.Entity is EntidadAuditable)) 
+            {
+                var entidad=item.Entity as EntidadAuditable;
+                entidad.UsuarioCrecion = "Felipe";
+                entidad.UsuarioModificacion = "Felipe";
+            }
+
+            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is EntidadAuditable))
+            {
+                var entidad = item.Entity as EntidadAuditable;
+                entidad.UsuarioModificacion = "Felipe2";
+                item.Property(nameof(entidad.UsuarioCrecion)).IsModified = false;
+            }
+        }
 
         /*Para realiizar la misma configuración de inyección de dependencias pero en el mismo DbContext con el método OnConfiguring. Para no entrar en conflictos de configuración lo colocamos dentro de un condicional*/
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

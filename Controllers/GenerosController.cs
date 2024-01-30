@@ -7,7 +7,7 @@ namespace EFCorePeliculas.Controllers
 {
     [ApiController]
     [Route("api/generos")]
-    public class GenerosController:ControllerBase    
+    public class GenerosController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
@@ -23,8 +23,8 @@ namespace EFCorePeliculas.Controllers
             // Logs en Management Studio veremos que el registro log se crea cada vez que ejecutamos el endpoint y su id se compone de
             // una cadena de caracteres o string irrepetible.
 
-            _context.Logs.Add(new Log() 
-            { 
+            _context.Logs.Add(new Log()
+            {
                 //Id=new Guid(),
                 Mensaje = "Ejecutando el método GenerosController.Get"
             });
@@ -38,7 +38,7 @@ namespace EFCorePeliculas.Controllers
             o ya ha sido creado. Es por ello que conviene dejar que la bd lo genere solo.*/
             await _context.SaveChangesAsync();
             //Usamos la propiedad sombra para ordernar los resultados por fecha de creación.
-            return await _context.Generos.OrderByDescending(g=>EF.Property<DateTime>(g,"FechaCreacion")).ToListAsync();
+            return await _context.Generos.OrderByDescending(g => EF.Property<DateTime>(g, "FechaCreacion")).ToListAsync();
 
             /*Optimización de Queries*/
 
@@ -51,7 +51,7 @@ namespace EFCorePeliculas.Controllers
                 opciones.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             
              */
-            
+
         }
 
         /*First y FirstOrDefault*/
@@ -64,7 +64,7 @@ namespace EFCorePeliculas.Controllers
         {
             var genero = await _context.Generos.FirstOrDefaultAsync(g => g.Nombre.StartsWith("C"));
 
-            if(genero == null)
+            if (genero == null)
             {
                 return NotFound();
             }
@@ -79,9 +79,9 @@ namespace EFCorePeliculas.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genero>> Get(int id)
         {
-            var genero=await _context.Generos.AsTracking().FirstOrDefaultAsync(g=>g.Id==id);
+            var genero = await _context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Id == id);
 
-            if(genero == null)
+            if (genero == null)
             {
                 return NotFound();
 
@@ -93,8 +93,8 @@ namespace EFCorePeliculas.Controllers
                 Id = genero.Id,
                 Nombre = genero.Nombre,
                 fechaCreacion
-            }) ;
-            
+            });
+
         }
 
         [HttpGet]
@@ -112,8 +112,8 @@ namespace EFCorePeliculas.Controllers
         {
             var genero = await _context.Generos
                 .Where(g => g.Nombre.Contains(nombre))
-              //.OrderBy(g=>g.Nombre)
-              //.OrderyByDescending(g=>g.Nombre)
+                //.OrderBy(g=>g.Nombre)
+                //.OrderyByDescending(g=>g.Nombre)
                 .ToListAsync();
 
             return genero;
@@ -133,7 +133,7 @@ namespace EFCorePeliculas.Controllers
                 .Take(cantidadRegistrosPorPagina)
                 .ToListAsync();
             return generos;
-            
+
             /*Con este método obtengo la paginación. Muestro dos registros por cada página en orden consecutivo, es decir, en la página 1
 
               muestro los registros 1 y 2, pág.2 registros 3 y 4, y así sucesivamente.*/
@@ -150,7 +150,7 @@ namespace EFCorePeliculas.Controllers
 
 
         [HttpPost("postSimple")]
-        public async Task<ActionResult>Post(Genero genero)
+        public async Task<ActionResult> Post(Genero genero)
         {
             /*En la siguiente linea lo que estamos haciendo es cambiar el status de la entidad género. No es que ya s eva a agregar
              a la bd sino que está marcando ese objeto como próximo a agregar para cuando ejecutemos la función SaveChanges se agregue a la bd.*/
@@ -160,7 +160,7 @@ namespace EFCorePeliculas.Controllers
 
             /*SI queremos evitar el código 500 al agregar un registro duplicado (el caso del campo Nombre que funciona como índice) podemos agregar la siguiente validación:*/
 
-            var existeGeneroConNombre=await _context.Generos.AnyAsync(g=>g.Nombre==genero.Nombre);
+            var existeGeneroConNombre = await _context.Generos.AnyAsync(g => g.Nombre == genero.Nombre);
 
             if (existeGeneroConNombre)
             {
@@ -199,9 +199,9 @@ namespace EFCorePeliculas.Controllers
         public async Task<ActionResult> Agregar2(int id)
         {
             /*Colocamos AsTracking ya que por defecto tenemos configurado AsNoTracking a nivel global por defecto*/
-            var genero = await _context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Id ==id);
+            var genero = await _context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Id == id);
 
-            if(genero == null)
+            if (genero == null)
             {
                 return NotFound();
             }
@@ -210,8 +210,8 @@ namespace EFCorePeliculas.Controllers
                 genero.Nombre += "2";
             }
 
-           await _context.SaveChangesAsync();
-           return Ok();
+            await _context.SaveChangesAsync();
+            return Ok();
 
             /*Es conectado porque estoy usando el mismo DbContext tanto para cargar el género como para actualizarlo-grabarlo*/
 
@@ -222,23 +222,23 @@ namespace EFCorePeliculas.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-           var genero=await _context.Generos.FirstOrDefaultAsync(g=>g.Id==id);
-           if(genero is null)
-           {
+            var genero = await _context.Generos.FirstOrDefaultAsync(g => g.Id == id);
+            if (genero is null)
+            {
                 return NotFound();
-           }
-           _context.Remove(genero); //Remove es el cambia el status del género a borrado
-           await _context.SaveChangesAsync();
-           return Ok();
+            }
+            _context.Remove(genero); //Remove es el cambia el status del género a borrado
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         /*BORRADO LÓGICO - EJEMPLO*/
         [HttpDelete("BorradoLogico/{id:int}")]
-        public async Task<ActionResult> DeleteLogico (int id)
+        public async Task<ActionResult> DeleteLogico(int id)
         {
             /*Colocamos AsTracking xq vamos a hacer una actualización, es decir,cambiar el valor del campo booleano*/
-            var genero=await _context.Generos.AsTracking().FirstOrDefaultAsync(g=>g.Id==id);
-            if(genero is null)
+            var genero = await _context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Id == id);
+            if (genero is null)
             {
                 return NotFound();
             }
@@ -252,7 +252,7 @@ namespace EFCorePeliculas.Controllers
         public async Task<IEnumerable<Genero>> GetNoBorradosLogico()
         {
             var genero = await _context.Generos
-                .Where(g => g.EstaBorrado==false)
+                .Where(g => g.EstaBorrado == false)
                 .ToListAsync();
 
             return genero;
@@ -279,7 +279,7 @@ namespace EFCorePeliculas.Controllers
             var genero = await _context.Generos.AsTracking()
                 .IgnoreQueryFilters()
                 .FirstOrDefaultAsync(g => g.Id == id);
-            if(genero is null)
+            if (genero is null)
             {
                 return NotFound();
             }
@@ -297,28 +297,35 @@ namespace EFCorePeliculas.Controllers
 
         /*RESUMEN DE SECCIÓN 4: CRUD*/
 
-      /*Modelo Conectado: Es cuando el DbContext que carga una entidad es el mismo que usamos para editarla.
-       
-        Modelo Desconectado: Es cuando intentamos editar una entidad utilizando un DbContext distinto al que la ha cargado.
+        /*Modelo Conectado: Es cuando el DbContext que carga una entidad es el mismo que usamos para editarla.
 
-        Add: Usamos ese método para cambiar el status de la entidad en memoria, para que cuando utilicemos Savechanges la entidad sea insertada
-        en la base de datos.
+          Modelo Desconectado: Es cuando intentamos editar una entidad utilizando un DbContext distinto al que la ha cargado.
 
-        Mapeo Flexible: Nos sirve para poder mapear un campo a una columna, en vez de una propiedad a una columna. Esto nos da la flexibilidad de poder
-        realizar transformaciones a la data antes de insertarla en la bd.
+          Add: Usamos ese método para cambiar el status de la entidad en memoria, para que cuando utilicemos Savechanges la entidad sea insertada
+          en la base de datos.
 
-        Update: Podemos marcar un registro como modificado, lo que significa que cuando ejecutemos SaveChanges EF Core se va a encargar de actualizar el registro
-        correspondiente en la bd. Esta es la forma en la cual actualizamos un registro utilizando Modelo Desconectado. En el caso de Modelo Conectado no es necesario
-        utilizar la función update, sino que podemos actualizar las propiedades de la entidad y al utilizar SaveChanges los campos modificados serán persistidos en la bd.
+          Mapeo Flexible: Nos sirve para poder mapear un campo a una columna, en vez de una propiedad a una columna. Esto nos da la flexibilidad de poder
+          realizar transformaciones a la data antes de insertarla en la bd.
 
-        Remove: Podemos actualizar el status de una entidad a borrada, para que cuando ejecutemos SaveChanges el registro en la bd sea eliminado. 
+          Update: Podemos marcar un registro como modificado, lo que significa que cuando ejecutemos SaveChanges EF Core se va a encargar de actualizar el registro
+          correspondiente en la bd. Esta es la forma en la cual actualizamos un registro utilizando Modelo Desconectado. En el caso de Modelo Conectado no es necesario
+          utilizar la función update, sino que podemos actualizar las propiedades de la entidad y al utilizar SaveChanges los campos modificados serán persistidos en la bd.
 
-        Borrado Lógico o Suave: Nos permite marcar un registro como borrado pero sin realmente removerlo de la tabla. Esto es útil cuando queremos permitir
-        una funcionalidad de borrado pero cuando necesitamos conservar la data para uso futuro (ej.: historial).
+          Remove: Podemos actualizar el status de una entidad a borrada, para que cuando ejecutemos SaveChanges el registro en la bd sea eliminado. 
 
-        Filtros a Nivel del Modelo: Lo utilizamos para configurar filtros por defecto en nuestras entidades. Podemos saltarnos dichos filtros en los queries querramos.
-      */
+          Borrado Lógico o Suave: Nos permite marcar un registro como borrado pero sin realmente removerlo de la tabla. Esto es útil cuando queremos permitir
+          una funcionalidad de borrado pero cuando necesitamos conservar la data para uso futuro (ej.: historial).
 
+          Filtros a Nivel del Modelo: Lo utilizamos para configurar filtros por defecto en nuestras entidades. Podemos saltarnos dichos filtros en los queries querramos.
+        */
+
+        [HttpPut]
+        public async Task<ActionResult> Put(Genero genero)
+        {
+            _context.Update(genero);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
     }
 

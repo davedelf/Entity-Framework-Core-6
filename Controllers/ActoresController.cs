@@ -123,9 +123,20 @@ namespace EFCorePeliculas.Controllers
             /*El Update me permite marcar el objeto como modificado, pues significa que el status modificado, en la base de datos,
              hay un registro que representa a este objeto y sus propiedades han sido modificadas y por lo tanto ante el siguiente
             SaveChanges el resgistro de la bd debe ser actualizado.*/
-            _context.Update(actor);
+
+            //_context.Update(actor);
 
             /*Entonces ahora se actualiza el registro en la base de datos.*/
+
+            /*Si por ejemplo deseamos modificar sólo un campo y que el resto no se modifique. Es decir, que sólo actualiza el campo
+             en cuestión y los otros se ignoran
+            
+             en este ejmplo queremos que sólo se modifque el nombre y el resto de los campos se ignoren. Si no hacemos esto, al
+            ejecutar el endpoint los otros campos estarán en null, pero con esto lo evitamos, por lo que los valores permanecen
+            intactos y solo se modifica el campo en cuestión, que en este caso es Nombre*/
+
+            _context.Entry(actor).Property(a => a.Nombre).IsModified = true;
+
             await _context.SaveChangesAsync();
             return Ok();
 

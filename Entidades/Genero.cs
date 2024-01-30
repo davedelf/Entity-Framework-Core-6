@@ -8,7 +8,7 @@ namespace EFCorePeliculas.Entidades
      //[Index(nameof(Nombre), IsUnique = true)]
      /*Esto me garantiza de que no va a haber dos géneros con el mismo nombre. Podemos hacer esta misma configuración en el 
       API Fluente en el archivo GeneroConfig*/
-    public class Genero
+    public class Genero:EntidadAuditable
     {
         //Para que esta clase represente una tabla en la base de datos debemos colocarla como propiedad DBSet en el DBContext
         public int Id { get; set; }
