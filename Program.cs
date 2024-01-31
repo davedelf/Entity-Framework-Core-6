@@ -39,6 +39,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 //Inyección de dependencias ObtenerUsuarioId
 
 builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
+builder.Services.AddScoped<IEventoDbContext, EventosDbContext>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();

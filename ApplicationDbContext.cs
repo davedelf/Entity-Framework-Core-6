@@ -11,6 +11,7 @@ namespace EFCorePeliculas
     public class ApplicationDbContext : DbContext
     {
         private IServicioUsuario servicioUsuario;
+        private readonly IEventoDbContext eventoDbContext;
 
         /*Si no queremos entrar en conflicto al utilizar la inyección de dependencias para instanciar el DbContext colocamos un constructor y en la clase Program
 builder.Services.AddDbContext<ApplicationDbContext>();*/
@@ -18,9 +19,20 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
         {
             
         }
-        public ApplicationDbContext(DbContextOptions options,IServicioUsuario servicioUsuario) : base(options)
+
+        //Acá inyectamos los servicios
+        public ApplicationDbContext(DbContextOptions options,
+            IServicioUsuario servicioUsuario,IEventoDbContext eventosDbContext) 
+            : base(options)
         {
             this.servicioUsuario=servicioUsuario;
+            if(eventosDbContext is not null)
+            {
+                ChangeTracker.Tracked += eventosDbContext.ManejarTracked;
+                ChangeTracker.StateChanged += eventosDbContext.ManejarState;
+
+                //Estos eventos se van a disparar solo cuando no usemos el AsNoTracking, por eso es importante usar eventos con Tracking
+            }
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
