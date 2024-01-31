@@ -1,5 +1,6 @@
 using EFCorePeliculas;
 using EFCorePeliculas.CompiledModels;
+using EFCorePeliculas.Servicios;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -34,6 +35,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 });
 
 //builder.Services.AddDbContext<ApplicationDbContext>();
+
+//Inyección de dependencias ObtenerUsuarioId
+
+builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();

@@ -2,6 +2,7 @@
 using EFCorePeliculas.Entidades.Configuraciones;
 using EFCorePeliculas.Entidades.Seeding;
 using EFCorePeliculas.Entidades.SinLlaves;
+using EFCorePeliculas.Servicios;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
@@ -9,15 +10,17 @@ namespace EFCorePeliculas
 {
     public class ApplicationDbContext : DbContext
     {
+        private IServicioUsuario servicioUsuario;
+
         /*Si no queremos entrar en conflicto al utilizar la inyección de dependencias para instanciar el DbContext colocamos un constructor y en la clase Program
-         builder.Services.AddDbContext<ApplicationDbContext>();*/
+builder.Services.AddDbContext<ApplicationDbContext>();*/
         public ApplicationDbContext()
         {
             
         }
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public ApplicationDbContext(DbContextOptions options,IServicioUsuario servicioUsuario) : base(options)
         {
-
+            this.servicioUsuario=servicioUsuario;
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -30,14 +33,14 @@ namespace EFCorePeliculas
             foreach(var item in ChangeTracker.Entries().Where(e=>e.State== EntityState.Added && e.Entity is EntidadAuditable)) 
             {
                 var entidad=item.Entity as EntidadAuditable;
-                entidad.UsuarioCrecion = "Felipe";
-                entidad.UsuarioModificacion = "Felipe";
+                entidad.UsuarioCrecion = servicioUsuario.ObtenerUsuarioId();
+                entidad.UsuarioModificacion = servicioUsuario.ObtenerUsuarioId();
             }
 
             foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is EntidadAuditable))
             {
                 var entidad = item.Entity as EntidadAuditable;
-                entidad.UsuarioModificacion = "Felipe2";
+                entidad.UsuarioModificacion = servicioUsuario.ObtenerUsuarioId();
                 item.Property(nameof(entidad.UsuarioCrecion)).IsModified = false;
             }
         }
