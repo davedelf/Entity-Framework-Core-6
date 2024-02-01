@@ -30,7 +30,9 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
             {
                 ChangeTracker.Tracked += eventosDbContext.ManejarTracked;
                 ChangeTracker.StateChanged += eventosDbContext.ManejarState;
-
+                SavingChanges += eventosDbContext.ManejarSavingChanges;
+                SavedChanges += eventosDbContext.ManejarSavedChanges;
+                SaveChangesFailed += eventosDbContext.ManejarSaveChangesFailed;
                 //Estos eventos se van a disparar solo cuando no usemos el AsNoTracking, por eso es importante usar eventos con Tracking
             }
         }
