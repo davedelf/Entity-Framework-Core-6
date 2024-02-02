@@ -79,21 +79,41 @@ namespace EFCorePeliculas.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Genero>> Get(int id)
         {
-            var genero = await _context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Id == id);
+            //QUERIES ARBITRARIOS
+
+            //Utilizando técnica placeholder
+
+
+            //var genero = await _context.Generos.FromSqlRaw("select * from Generos where id={0}", id)
+            //    .IgnoreQueryFilters()
+            //    .FirstOrDefaultAsync();
+
+            /*IMPORTANTE: utilizar sintaxis {0}", id para evitar ataque Sql Inyection*/
+
+
+
+            //Utilizando String Interpolation
+
+            var genero = await _context.Generos.FromSqlInterpolated($"Select * From Generos where id={id}")
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync();
+
+            //var genero = await _context.Generos.AsTracking().FirstOrDefaultAsync(g => g.Id == id);
 
             if (genero == null)
             {
                 return NotFound();
 
             }
+            return Ok(genero);
 
-            var fechaCreacion = _context.Entry(genero).Property<DateTime>("FechaCreacion").CurrentValue;
-            return Ok(new
-            {
-                Id = genero.Id,
-                Nombre = genero.Nombre,
-                fechaCreacion
-            });
+            //var fechaCreacion = _context.Entry(genero).Property<DateTime>("FechaCreacion").CurrentValue;
+            //return Ok(new
+            //{
+            //    Id = genero.Id,
+            //    Nombre = genero.Nombre,
+            //    fechaCreacion
+            //});
 
         }
 

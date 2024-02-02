@@ -167,19 +167,36 @@ namespace EFCorePeliculas.Controllers
         [HttpGet("{id:int}")]
         public async Task<ActionResult>Get(int id)
         {
-            var cineDB = await _context.Cines.AsTracking()
-               .Include(c => c.SalasDeCine)
-               .Include(c => c.CineOferta)
-                //Ejemplo de implementación de Table Splitting
+            //var cineDB = await _context.Cines.AsTracking()
+            //   .Include(c => c.SalasDeCine)
+            //   .Include(c => c.CineOferta)
+            //    //Ejemplo de implementación de Table Splitting
+            //    .Include(c => c.CineDetalle)
+            //   .FirstOrDefaultAsync(c => c.Id == id);
+            //if (cineDB is null)
+            //{
+            //    return NotFound();
+            //}
+
+            //cineDB.Ubicacion = null; //Esto lo colocamos simplemente para no tener problemas con la ubicación
+            //return Ok(cineDB);
+
+            //QUERY ARBITRARIO: Combinando Sql Interpolation y LINQ
+
+            var cineDB = await _context.Cines.FromSqlInterpolated($"select * from cines where id={id}")
+                .Include(c => c.SalasDeCine)
+                .Include(c => c.CineOferta)
                 .Include(c => c.CineDetalle)
-               .FirstOrDefaultAsync(c => c.Id == id);
-            if (cineDB is null)
+                .FirstOrDefaultAsync();
+
+            if(cineDB is null)
             {
                 return NotFound();
             }
-
-            cineDB.Ubicacion = null; //Esto lo colocamos simplemente para no tener problemas con la ubicación
+            cineDB.Ubicacion = null;
             return Ok(cineDB);
+
+
         }
 
         /*Al ejecutar el endpoint podemos observar lo siguiente: 
