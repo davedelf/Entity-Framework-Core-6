@@ -364,6 +364,10 @@ namespace EFCorePeliculas.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+
+            //Funciona, pero ver xq no agrega automáticamente el campo EstaBorrado=false.
+            //Por un lado supongo que se debe a que estamos realizando un post arbitrario
+            //y no utilizando linq o el criterio estandarizado por defecto (GeneroConfig)
         }
 
     }

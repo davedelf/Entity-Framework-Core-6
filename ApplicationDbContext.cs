@@ -125,7 +125,24 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
                 .ToView(null);
             //Si no queremos utilizar la notación [Keyless] en la entidad podemos colocar acá .HasNoKey()
 
-            modelBuilder.Entity<PeliculaConConteos>().HasNoKey().ToView("PeliculasConConteos");
+            //modelBuilder.Entity<PeliculaConConteos>().HasNoKey().ToView("PeliculasConConteos");
+
+            //ToSqlQuery - Centralizando queries arbitrarios
+
+            modelBuilder.Entity<PeliculaConConteos>().ToSqlQuery(@"
+                select Id, Titulo, 
+                (select count(*)
+                from GenerosPeliculas
+                where PeliculasId=Peliculas.Id) as CantidadGeneros,
+                (select count(distinct CineId)
+                from PeliculaSalaDeCine
+                INNER JOIN SalasDeCine
+                ON SalasDeCIne.Id=PeliculaSalaDeCine.SalasDeCineId
+                where PeliculasId=Peliculas.Id) as CantidadCines,
+                (
+                select count(*)
+                from PeliculasActores where PeliculaId=Peliculas.Id) as CantidadActores
+                from Peliculas");
 
             //Automatizando Configuraciones en el API Fluente
             foreach(var tipoEntidad in modelBuilder.Model.GetEntityTypes())
