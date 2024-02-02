@@ -1,6 +1,7 @@
 ﻿using EFCorePeliculas.DTOs;
 using EFCorePeliculas.Entidades;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace EFCorePeliculas.Controllers
@@ -368,6 +369,51 @@ namespace EFCorePeliculas.Controllers
             //Funciona, pero ver xq no agrega automáticamente el campo EstaBorrado=false.
             //Por un lado supongo que se debe a que estamos realizando un post arbitrario
             //y no utilizando linq o el criterio estandarizado por defecto (GeneroConfig)
+        }
+
+        [HttpGet("procedimientoAlmacenado/{id:int}")]
+        public async Task<ActionResult<Genero>> GetSP(int id)
+        {
+            var generos = _context.Generos.FromSqlInterpolated($"EXEC Generos_ObtenerPorId {id}")
+                .IgnoreQueryFilters()
+                .AsAsyncEnumerable();
+
+            //Aunque sea un único resultado debemos utilizar AsAsyncEnumerable() ya que de lo contrario
+            // no funcionará. Esto se debe a que este query arbitrario no puede ser modificado libremente
+            // por EF Core o no sigue las reglas estandarizadas por el framework.
+
+            await foreach ( var genero in generos )
+            {
+                return genero;
+            }
+            return NotFound();
+
+        }
+
+        [HttpPost("procedimientoAlmacenado")]
+        public async Task<ActionResult> PostSP(Genero genero)
+        {
+            var existeGenero = await _context.Generos.AnyAsync(g => g.Nombre == genero.Nombre);
+
+            if (existeGenero)
+            {
+                return BadRequest("Género ya existe");
+            }
+
+            //Necesitamos extraer el id del sp, ya que es de tipo output. Para ello creamos un SqlParameter
+
+            var outputId = new SqlParameter();
+            outputId.ParameterName = "id";
+            outputId.SqlDbType = System.Data.SqlDbType.Int;
+            outputId.Direction = System.Data.ParameterDirection.Output;
+
+            await _context.Database.ExecuteSqlRawAsync("EXEC Generos_Insertar @nombre = {0}, @id = {1} OUTPUT ", genero.Nombre, outputId);
+
+            var id=(int)outputId.Value;
+
+            return Ok(id);
+
+            //Al ejecutar el endpoint nos devolverá el id del género recién creado
         }
 
     }
