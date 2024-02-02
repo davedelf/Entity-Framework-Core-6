@@ -347,6 +347,25 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
+        //Sentencia Arbitraria
+
+        [HttpPost("PostArbitrario")]
+        public async Task<ActionResult> PostArbitrario(Genero genero)
+        {
+            var existe = await _context.Generos.AnyAsync(g => g.Nombre == genero.Nombre);
+
+            if (existe)
+            {
+                return BadRequest("Género ya existe");
+            }
+
+
+            await _context.Database.ExecuteSqlInterpolatedAsync($@"INSERT INTO GENEROS (NombreGenero, EstaBorrado) VALUES ({genero.Nombre},{0})");
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
     }
 
 }
