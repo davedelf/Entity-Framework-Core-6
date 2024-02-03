@@ -130,20 +130,20 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
 
             //ToSqlQuery - Centralizando queries arbitrarios
 
-            modelBuilder.Entity<PeliculaConConteos>().ToSqlQuery(@"
-                select Id, Titulo, 
-                (select count(*)
-                from GenerosPeliculas
-                where PeliculasId=Peliculas.Id) as CantidadGeneros,
-                (select count(distinct CineId)
-                from PeliculaSalaDeCine
-                INNER JOIN SalasDeCine
-                ON SalasDeCIne.Id=PeliculaSalaDeCine.SalasDeCineId
-                where PeliculasId=Peliculas.Id) as CantidadCines,
-                (
-                select count(*)
-                from PeliculasActores where PeliculaId=Peliculas.Id) as CantidadActores
-                from Peliculas");
+            //modelBuilder.Entity<PeliculaConConteos>().ToSqlQuery(@"
+            //    select Id, Titulo, 
+            //    (select count(*)
+            //    from GenerosPeliculas
+            //    where PeliculasId=Peliculas.Id) as CantidadGeneros,
+            //    (select count(distinct CineId)
+            //    from PeliculaSalaDeCine
+            //    INNER JOIN SalasDeCine
+            //    ON SalasDeCIne.Id=PeliculaSalaDeCine.SalasDeCineId
+            //    where PeliculasId=Peliculas.Id) as CantidadCines,
+            //    (
+            //    select count(*)
+            //    from PeliculasActores where PeliculaId=Peliculas.Id) as CantidadActores
+            //    from Peliculas");
 
             //Automatizando Configuraciones en el API Fluente
             foreach(var tipoEntidad in modelBuilder.Model.GetEntityTypes())
@@ -192,6 +192,10 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
             //Segunda forma de invocar funciones definidas por el usuario
             Escalares.RegistrarFunciones(modelBuilder);
 
+            //ToTable(name:null) para que no se mapee a ninguna tabla
+            modelBuilder.Entity<PeliculaConConteos>().HasNoKey().ToTable(name: null);
+            modelBuilder.HasDbFunction(() => PeliculaConConteos(0));
+
         }
 
 
@@ -229,6 +233,11 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
         public int DetalleFacturaSuma(int facturaId)
         {
             return 0;
+        }
+
+        public IQueryable<PeliculaConConteos>PeliculaConConteos(int peliculaId)
+        {
+            return FromExpression(() => PeliculaConConteos(peliculaId));
         }
 
 

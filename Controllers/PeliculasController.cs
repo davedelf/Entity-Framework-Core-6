@@ -266,11 +266,22 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
-        [HttpGet("PeliculasConConteos")]
-        public async Task<ActionResult<IEnumerable<PeliculaConConteos>>> GetPeliculasConConteos()
+        [HttpGet("PeliculasConConteos/{id:int}")]
+        public async Task<ActionResult<PeliculaConConteos>> GetPeliculasConConteos(int id)
         {
             //Recordemos que el Set es para crear el DbSet, podemos obviar esta línea creando el dbset en el API Fluente
-            return await _context.Set<PeliculaConConteos>().ToListAsync();
+            //return await _context.Set<PeliculaConConteos>().ToListAsync();
+
+            var resultado = await _context.PeliculaConConteos(id).FirstOrDefaultAsync();
+
+            //FirstOrDefaultAsync porque espero un solo resultado; si fueran varios usamos ToList
+
+            if(resultado is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(resultado);
         }
 
       
