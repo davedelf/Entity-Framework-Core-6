@@ -3,11 +3,13 @@ using AutoMapper.QueryableExtensions;
 using EFCorePeliculas.DTOs;
 using EFCorePeliculas.Entidades;
 using EFCorePeliculas.Entidades.SinLlaves;
+using EFCorePeliculas.Servicios;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
+using System.Collections.ObjectModel;
 
 namespace EFCorePeliculas.Controllers
 {
@@ -17,10 +19,12 @@ namespace EFCorePeliculas.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public CinesController(ApplicationDbContext context,IMapper mapper)
+        private readonly IActualizadorObservableCollection _actualizadorObservableCollection;
+        public CinesController(ApplicationDbContext context,IMapper mapper, IActualizadorObservableCollection actualizadorObservableCollection)
         { 
             _context= context;
             _mapper= mapper;
+            _actualizadorObservableCollection= actualizadorObservableCollection;
         }
 
         [HttpGet("SinUbicacion")]
@@ -96,7 +100,7 @@ namespace EFCorePeliculas.Controllers
                     Misiones="Misiones..."
 
                 },
-                SalasDeCine = new HashSet<SalaDeCine>()
+                SalasDeCine = new ObservableCollection<SalaDeCine>()
                 {
                     new SalaDeCine()
                     {
@@ -157,6 +161,7 @@ namespace EFCorePeliculas.Controllers
             }
 
             cineDB = _mapper.Map(cineCreacionDTO, cineDB); //Esta simple línea de código ya hace todo: crear, actualizar, modificar y borrar.
+            _actualizadorObservableCollection.Actualizar(cineDB.SalasDeCine, cineCreacionDTO.SalasDeCine);
 
             await _context.SaveChangesAsync();
 

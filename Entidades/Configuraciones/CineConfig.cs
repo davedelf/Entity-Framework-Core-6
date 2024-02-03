@@ -8,6 +8,10 @@ namespace EFCorePeliculas.Entidades.Configuraciones
     {
         public void Configure(EntityTypeBuilder<Cine> builder)
         {
+            //Notif. Personalizada: cambiamos la estrategia de detección de cambios
+
+            builder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
+
             builder.Property(prop => prop.Nombre).HasMaxLength(150).IsRequired();
 
             //Configuramos la relación uno a uno con el API Fluente
@@ -26,7 +30,11 @@ namespace EFCorePeliculas.Entidades.Configuraciones
 
                 //Con esta opción estamos restringiendo el borrado del cine, es decir, si tiene salas de cine
                 //relacionadas no podremos borrarlo. Usar NoAction también es válido/cumple la misma función.
-                .OnDelete(DeleteBehavior.Restrict);
+
+                //.OnDelete(DeleteBehavior.Restrict);
+
+                //Colocamos Cascade para que la notificación personalizada funcione
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(c => c.CineDetalle)
                 .WithOne(cd => cd.Cine)

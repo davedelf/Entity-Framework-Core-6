@@ -40,6 +40,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
 
 builder.Services.AddScoped<IServicioUsuario, ServicioUsuario>();
 builder.Services.AddScoped<IEventoDbContext, EventosDbContext>();
+builder.Services.AddScoped<IActualizadorObservableCollection, ActualizadorObservableCollection>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 var app = builder.Build();

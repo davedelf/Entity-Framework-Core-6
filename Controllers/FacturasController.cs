@@ -56,5 +56,58 @@ namespace EFCorePeliculas.Controllers
                 return BadRequest("Error al grabar");
             }
         }
+
+
+        //Hecho por mí - Ver qué se puede pulir o mejorar
+        [HttpPost("postConParametros")]
+        public async Task<ActionResult> PostP(List<DetalleFactura> detalles)
+        {
+            using var transaccion=await _context.Database.BeginTransactionAsync();
+
+            //Estas validaciones ¿deberían ir en el bloque catch?
+            foreach(var detalle in detalles)
+            {
+                if(detalle.Producto==null)
+                {
+                    return BadRequest("Error. Ingrese producto");
+
+                }
+                if (detalle.Precio == 0)
+                {
+                    return BadRequest($"Error. Ingrese precio para {detalle.Producto}");
+                }
+
+            }
+
+            try
+            {
+                var factura = new Factura()
+                {
+                    FechaCreacion = DateTime.Now
+                };
+                await _context.AddAsync(factura);
+                await _context.SaveChangesAsync();
+
+                foreach (var det in detalles)
+                {
+                    det.FacturaId = factura.Id;
+                    await _context.AddAsync(det);
+                    await _context.SaveChangesAsync();
+                }
+                await _context.SaveChangesAsync();
+                await transaccion.CommitAsync();
+                return Ok("Grabado correctamente");
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error al grabar datos");
+            }
+
+
+
+
+        }
     }
 }

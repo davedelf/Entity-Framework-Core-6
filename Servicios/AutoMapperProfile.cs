@@ -25,7 +25,10 @@ namespace EFCorePeliculas.Servicios
                 .ForMember(dto => dto.Actores, ent => ent.MapFrom(prop => prop.PeliculasActores.Select(pa => pa.Actor)));
 
             var geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(srid: 4326);
+
             CreateMap<CineCreacionDTO, Cine>()
+            //Ignoro el mapeo del ObservableCollection
+                .ForMember(ent=>ent.SalasDeCine, opciones=>opciones.Ignore())
                 .ForMember(ent => ent.Ubicacion,
                     dto => dto.MapFrom(campo => 
                         geometryFactory.CreatePoint(new Coordinate(campo.Latitud, campo.Longitud))));
