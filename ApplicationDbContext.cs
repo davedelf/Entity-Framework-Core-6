@@ -217,6 +217,8 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
         public DbSet<CineDetalle>CineDetalles { get; set; }
         public DbSet<Pago> Pagos { get; set; }
         public DbSet<Producto>Productos { get; set; }
+        public DbSet<Factura> Facturas { get; set; }
+        public DbSet<DetalleFactura> DetallesFacturas { get; set; }
 
 
 
