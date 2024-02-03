@@ -1,5 +1,7 @@
 ﻿using EFCorePeliculas.Entidades;
+using EFCorePeliculas.Entidades.Funciones;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EFCorePeliculas.Controllers
 {
@@ -105,9 +107,19 @@ namespace EFCorePeliculas.Controllers
                 return BadRequest("Error al grabar datos");
             }
 
+        }
 
+        [HttpGet("FuncionesEscalares")]
+        public async Task<ActionResult> GetFuncionesEscalares()
+        {
+            var facturas = await _context.Facturas.Select(f => new 
+            {
+                Id = f.Id,
+                Total = _context.DetalleFacturaSuma(f.Id),
+                Promedio = Escalares.DetalleFacturaPromedio(f.Id),
+            }).OrderByDescending(f => _context.DetalleFacturaSuma(f.Id)).ToListAsync();
 
-
+            return Ok(facturas);
         }
     }
 }

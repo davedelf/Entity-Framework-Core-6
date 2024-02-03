@@ -149,6 +149,92 @@ namespace EFCorePeliculas.Migrations
                     b.HasIndex("FacturaId");
 
                     b.ToTable("DetallesFacturas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FacturaId = 1,
+                            Precio = 350.99000000000001
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FacturaId = 1,
+                            Precio = 10.0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FacturaId = 1,
+                            Precio = 45.5
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FacturaId = 2,
+                            Precio = 17.989999999999998
+                        },
+                        new
+                        {
+                            Id = 5,
+                            FacturaId = 2,
+                            Precio = 14.0
+                        },
+                        new
+                        {
+                            Id = 6,
+                            FacturaId = 2,
+                            Precio = 45.0
+                        },
+                        new
+                        {
+                            Id = 7,
+                            FacturaId = 2,
+                            Precio = 100.0
+                        },
+                        new
+                        {
+                            Id = 8,
+                            FacturaId = 3,
+                            Precio = 371.0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            FacturaId = 3,
+                            Precio = 114.98999999999999
+                        },
+                        new
+                        {
+                            Id = 10,
+                            FacturaId = 3,
+                            Precio = 425.0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            FacturaId = 3,
+                            Precio = 1000.0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            FacturaId = 3,
+                            Precio = 5.0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            FacturaId = 3,
+                            Precio = 2.9900000000000002
+                        },
+                        new
+                        {
+                            Id = 14,
+                            FacturaId = 4,
+                            Precio = 50.0
+                        });
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Factura", b =>
@@ -165,6 +251,28 @@ namespace EFCorePeliculas.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Facturas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            FechaCreacion = new DateTime(2002, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            FechaCreacion = new DateTime(2002, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            FechaCreacion = new DateTime(2002, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            FechaCreacion = new DateTime(2002, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("EFCorePeliculas.Entidades.Genero", b =>
@@ -780,7 +888,7 @@ namespace EFCorePeliculas.Migrations
                     b.HasOne("EFCorePeliculas.Entidades.Cine", "Cine")
                         .WithMany("SalasDeCine")
                         .HasForeignKey("CineId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cine");

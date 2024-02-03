@@ -1,5 +1,6 @@
 ﻿using EFCorePeliculas.Entidades;
 using EFCorePeliculas.Entidades.Configuraciones;
+using EFCorePeliculas.Entidades.Funciones;
 using EFCorePeliculas.Entidades.Seeding;
 using EFCorePeliculas.Entidades.SinLlaves;
 using EFCorePeliculas.Servicios;
@@ -161,6 +162,7 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
              es o contiene URL. En ese caso, no importa si está en mayúscula o minúscula, no lo convierte a Unicode.*/
 
             SeedingPersonaMensaje.Seed(modelBuilder);
+            SeedingFacturas.Seed(modelBuilder);
 
 
             modelBuilder.Entity<Merchandising>().ToTable("Merchandising");
@@ -187,6 +189,8 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
             modelBuilder.Entity<Merchandising>().HasData(merch1);
             modelBuilder.Entity<PeliculaAlquilable>().HasData(pelicula1);
 
+            //Segunda forma de invocar funciones definidas por el usuario
+            Escalares.RegistrarFunciones(modelBuilder);
 
         }
 
@@ -219,6 +223,13 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
         public DbSet<Producto>Productos { get; set; }
         public DbSet<Factura> Facturas { get; set; }
         public DbSet<DetalleFactura> DetallesFacturas { get; set; }
+
+        //Primera forma de invocar funciones definidas por el usuario
+        [DbFunction]
+        public int DetalleFacturaSuma(int facturaId)
+        {
+            return 0;
+        }
 
 
 
