@@ -13,7 +13,7 @@ namespace EFCorePeliculas.Migrations
             as
             select Id, Titulo, 
             (select count(*)
-            from GeneroPelicula
+            from GenerosPeliculas
             where PeliculasId=Peliculas.Id) as CantidadGeneros,
             (select count(distinct CineId)
             from PeliculaSalaDeCine

@@ -121,5 +121,15 @@ namespace EFCorePeliculas.Controllers
 
             return Ok(facturas);
         }
+
+        //endpoint para columna calculada
+
+        [HttpGet("{id:int}/detalle")]
+        public async Task<ActionResult<IEnumerable<DetalleFactura>>> GetDetalle(int id)
+        {
+            return await _context.DetallesFacturas.Where(f=>f.FacturaId==id)
+                .OrderByDescending(f=>f.Total).ToListAsync();
+            
+        }
     }
 }

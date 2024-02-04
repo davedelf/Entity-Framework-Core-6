@@ -8,6 +8,12 @@ namespace EFCorePeliculas.Entidades
         public string Producto { get; set; }
         public int FacturaId { get; set; }
         [Precision(18, 2)]
-        public double Precio { get; set; }
+        public decimal Precio { get; set; }
+
+        public int Cantidad { get; set; }
+
+        [Precision(18,2)]
+        public decimal Total { get; set; }
+
     }
 }

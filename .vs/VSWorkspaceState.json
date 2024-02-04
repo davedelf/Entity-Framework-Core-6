@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Controllers",
     "\\Entidades",
-    "\\Entidades\\Seeding"
+    "\\Entidades\\Seeding",
+    "\\Migrations"
   ],
-  "SelectedNode": "\\EFCorePeliculas.sln",
+  "SelectedNode": "\\Controllers\\PeliculasController.cs",
   "PreviewInSolutionExplorer": false
 }
