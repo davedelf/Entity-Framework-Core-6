@@ -196,6 +196,11 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
             modelBuilder.Entity<PeliculaConConteos>().HasNoKey().ToTable(name: null);
             modelBuilder.HasDbFunction(() => PeliculaConConteos(0));
 
+            //Secuencia numérica
+            //NumeroFactura: es la secuencia o campo donde se guarda
+            //Factura: es el esquema
+            modelBuilder.HasSequence("NumeroFactura", "factura");
+
         }
 
 

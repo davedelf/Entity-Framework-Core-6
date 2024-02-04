@@ -10,6 +10,9 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             //Establecemos la relación entre Factura y DetalleFactura (1:N)
 
             builder.HasMany(typeof(DetalleFactura)).WithOne();
+
+            //Secuencia
+            builder.Property(f => f.NumeroFactura).HasDefaultValueSql("NEXT VALUE FOR Factura.NumeroFactura");
         }
     }
 }

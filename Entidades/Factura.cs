@@ -6,6 +6,7 @@ namespace EFCorePeliculas.Entidades
     {
         public int Id { get; set; }
         public DateTime FechaCreacion { get; set; }
+        public int NumeroFactura { get; set; }
 
     }
 }
