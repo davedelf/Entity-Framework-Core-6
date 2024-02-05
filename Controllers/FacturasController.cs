@@ -131,5 +131,21 @@ namespace EFCorePeliculas.Controllers
                 .OrderByDescending(f=>f.Total).ToListAsync();
             
         }
+
+        [HttpPost("concurrencia_fila")]
+        public async Task<ActionResult> ConcurrenciaFila()
+        {
+            var facturaId = 2;
+
+            var factura=await _context.Facturas.AsTracking().FirstOrDefaultAsync(f=>f.Id==facturaId);
+            factura.FechaCreacion = DateTime.Now;
+
+            await _context.Database.ExecuteSqlInterpolatedAsync(
+                @$"UPDATE Facturas SET FechaCreacion=GetDate() WHERE Id={factura.Id}");
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

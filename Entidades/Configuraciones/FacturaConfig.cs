@@ -13,6 +13,9 @@ namespace EFCorePeliculas.Entidades.Configuraciones
 
             //Secuencia
             builder.Property(f => f.NumeroFactura).HasDefaultValueSql("NEXT VALUE FOR Factura.NumeroFactura");
+
+            //Concurrencia por fila
+            //builder.Property(f => f.Version).IsRowVersion();
         }
     }
 }

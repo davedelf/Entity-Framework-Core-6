@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace EFCorePeliculas.Entidades
 {
@@ -8,5 +9,8 @@ namespace EFCorePeliculas.Entidades
         public DateTime FechaCreacion { get; set; }
         public int NumeroFactura { get; set; }
 
+        //Concurrencia por fila
+        [Timestamp]
+        public byte[] Version { get; set; }
     }
 }
