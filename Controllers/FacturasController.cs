@@ -10,10 +10,12 @@ namespace EFCorePeliculas.Controllers
     public class FacturasController:ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger _logger;
 
-        public FacturasController(ApplicationDbContext context)
+        public FacturasController(ApplicationDbContext context, ILogger<FacturasController> logger)
         {
             this._context = context;
+            this._logger = logger;
         }
 
         //Post a modo de ejemplo con data seeding
@@ -146,6 +148,59 @@ namespace EFCorePeliculas.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+
+
+        //Manejando Conflictos de Concurrencia
+
+        [HttpPost("concurrencia_fila_manejandoError")]
+        public async Task<ActionResult> ConcurrenciaFilaManejandoError()
+        {
+            var facturaId = 1;
+            try
+            {
+
+                //Persona1
+                var factura = await _context.Facturas.AsTracking().FirstOrDefaultAsync(f => f.Id == facturaId);
+                factura.FechaCreacion = DateTime.Now.AddDays(-10);
+
+                //Persona2
+                await _context.Database.ExecuteSqlInterpolatedAsync(
+                    @$"UPDATE Facturas SET FechaCreacion=GetDate() WHERE Id={factura.Id}");
+
+                //Persona1
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch(DbUpdateConcurrencyException ex)
+            {
+                var entry = ex.Entries.Single();
+
+                var facturaActual = await _context.Facturas.AsNoTracking().FirstOrDefaultAsync(f => f.Id == facturaId);
+
+                foreach(var propiedad in entry.Metadata.GetProperties())
+                {
+                    var valorIntentado = entry.Property(propiedad.Name).CurrentValue;
+                    var valorDBActual=_context.Entry(facturaActual).Property(propiedad.Name).CurrentValue;
+                    var valorAnterior=entry.Property(propiedad.Name).OriginalValue;
+
+                    if (valorDBActual.ToString() == valorIntentado.ToString())
+                    {
+                        //Esta propiedad no fue modificada
+                        continue;
+                    }
+
+                    _logger.LogInformation($"--- Propiedad {propiedad.Name} ---");
+                    _logger.LogInformation($"Valor intentado: {valorIntentado}");
+                    _logger.LogInformation($"Valor en la base de datos: {valorDBActual}");
+                    _logger.LogInformation($"Valor anterior: {valorAnterior}");
+
+                    //Hacer algo - opcional - 
+                }
+
+                return BadRequest("El registro no pudo ser actualizado, pues fué modificado por otra persona");
+            }
         }
     }
 }
