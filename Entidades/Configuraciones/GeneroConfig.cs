@@ -37,6 +37,13 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             /*Util cuando queremos crear una columna o traer data de la bd sin afectar a la entidad principal (Género)*/
 
             builder.Property<DateTime>("FechaCreacion").HasDefaultValueSql("GetDate()").HasColumnType("datetime2");
+
+            builder.ToTable(name: "Generos", opciones =>
+            {
+                opciones.IsTemporal();
+            });
+            builder.Property("PeriodStart").HasColumnType("datetime2");
+            builder.Property("PeriodEnd").HasColumnType("datetime2");
         }
     }
 }
