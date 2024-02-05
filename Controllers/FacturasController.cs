@@ -202,5 +202,27 @@ namespace EFCorePeliculas.Controllers
                 return BadRequest("El registro no pudo ser actualizado, pues fué modificado por otra persona");
             }
         }
+
+        //Conflicto de concurrencia con modelo desconectado
+
+        [HttpGet("ObtenerFactura")]
+        public async Task<ActionResult<Factura>> ObtenerFactura(int id)
+        {
+            var factura = await _context.Facturas.FirstOrDefaultAsync(f => f.Id == id);
+
+            if(factura is null)
+            {
+                return NotFound();
+            }
+            return factura;
+        }
+
+        [HttpPut("ActualizarFactura")]
+        public async Task<ActionResult> ActualizarFactura(Factura factura)
+        {
+            _context.Update(factura);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

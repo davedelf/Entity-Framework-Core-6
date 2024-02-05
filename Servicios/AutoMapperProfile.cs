@@ -51,6 +51,10 @@ namespace EFCorePeliculas.Servicios
 
             CreateMap<ActorCreacionDTO, Actor>();
 
+            //Manejo de concurrencia en modelo desconectado
+
+            CreateMap<GeneroActualizacionDTO, Genero>();
+
         }
     }
 }

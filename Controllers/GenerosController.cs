@@ -1,4 +1,5 @@
-﻿using EFCorePeliculas.DTOs;
+﻿using AutoMapper;
+using EFCorePeliculas.DTOs;
 using EFCorePeliculas.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -11,10 +12,13 @@ namespace EFCorePeliculas.Controllers
     public class GenerosController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-        public GenerosController(ApplicationDbContext context)
+        public GenerosController(ApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
+            this._context = context;
+            this._mapper = mapper;
+
         }
 
         [HttpGet]
@@ -344,6 +348,17 @@ namespace EFCorePeliculas.Controllers
         public async Task<ActionResult> Put(Genero genero)
         {
             _context.Update(genero);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut("ActualizacionDTO")]
+        public async Task<ActionResult> Put(GeneroActualizacionDTO generoActualizacionDTO)
+        {
+            var genero = _mapper.Map<Genero>(generoActualizacionDTO);
+            _context.Update(genero);
+            _context.Entry(genero).Property(g => g.Nombre).OriginalValue = generoActualizacionDTO.Nombre_Original;
+
             await _context.SaveChangesAsync();
             return Ok();
         }
