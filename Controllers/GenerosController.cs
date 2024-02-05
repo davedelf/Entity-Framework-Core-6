@@ -459,6 +459,85 @@ namespace EFCorePeliculas.Controllers
             return Ok();
 
         }
+
+        //Consultando Tabla Temporal y Tabla Histórica
+
+        [HttpPut("modificar_varias_veces")]
+        public async Task<ActionResult> ModificarVariasVeces()
+        {
+            var id = 47;
+            var genero=await _context.Generos.AsTracking().FirstOrDefaultAsync(g=>g.Id == id);
+
+            genero.Nombre = "Modificacion1";
+            await _context.SaveChangesAsync();
+            await Task.Delay(2000);
+
+            genero.Nombre = "Modificacion2";
+            await _context.SaveChangesAsync();
+            await Task.Delay(2000);
+
+            genero.Nombre = "Modificacion3";
+            await _context.SaveChangesAsync();
+            await Task.Delay(2000);
+
+            genero.Nombre = "Modificacion4";
+            await _context.SaveChangesAsync();
+            await Task.Delay(2000);
+
+            genero.Nombre = "Modificacion5";
+            await _context.SaveChangesAsync();
+            await Task.Delay(2000);
+
+            genero.Nombre = "Modificacion6";
+            await _context.SaveChangesAsync();
+            await Task.Delay(2000);
+
+            genero.Nombre = "ModificacionActual";
+            await _context.SaveChangesAsync();
+            await Task.Delay(2000);
+
+            return Ok();
+        }
+
+        [HttpGet("getTablaTemporal/{id:int}")]
+        public async Task<ActionResult<Genero>> GetTablaHistorica(int id)
+        {
+            var genero=await _context.Generos.AsTracking().FirstOrDefaultAsync(g=>g.Id == id);
+            var periodStart = _context.Entry(genero).Property<DateTime>("PeriodStart").CurrentValue;
+            var periodEnd = _context.Entry(genero).Property<DateTime>("PeriodEnd").CurrentValue;
+
+            if(genero is null)
+            {
+                return NotFound();
+            }
+            var fechaCreacion = _context.Entry(genero).Property<DateTime>("FechaCreacion").CurrentValue;
+
+            return Ok(new
+            {
+                Id=genero.Id,
+                Nombre=genero.Nombre,
+                fechaCreacion,
+                periodStart,
+                periodEnd
+            });
+        }
+
+        [HttpGet("TemporalAll/{id:int}")]
+        public async Task<ActionResult> GetTemporalAll(int id)
+        {
+            //Con TemporalAll indico que quiero traer todos los registros tanto de la tabla temporal y de la tabla historica
+            var generos=await _context.Generos.TemporalAll().AsTracking()
+                .Where(g=>g.Id == id)
+                .Select(g => new
+                {
+                    Id=g.Id,
+                    Nombre=g.Nombre,
+                    PeriodStart=EF.Property<DateTime>(g,"PeriodStart"),
+                    PeriodEnd=EF.Property<DateTime>(g,"PeriodEnd")
+                })
+                .ToListAsync();
+            return Ok(generos);
+        }
     }
 
 }
