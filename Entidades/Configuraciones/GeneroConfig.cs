@@ -11,7 +11,12 @@ namespace EFCorePeliculas.Entidades.Configuraciones
             builder.HasKey(prop => prop.Id);
             /*LONGITUD MÁXIMA DE UN CAMPO DE TEXTO*/
             /*Ejemplo 2: Longitud máxima con API FLuente*/
-            builder.Property(prop => prop.Nombre).HasMaxLength(150).IsRequired().HasColumnName("NombreGenero");
+            builder.Property(prop => prop.Nombre)
+                .HasMaxLength(150)
+                .IsRequired()
+                .HasColumnName("NombreGenero");
+               // .IsConcurrencyToken();
+
             /*(puedo alterar el nombre de las propiedades, no afecta a su funcionamiento)*/
 
             /*CAMBIANDO NOMBRES Y ESQUEMA*/

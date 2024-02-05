@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace EFCorePeliculas.Entidades
@@ -12,6 +13,9 @@ namespace EFCorePeliculas.Entidades
     {
         //Para que esta clase represente una tabla en la base de datos debemos colocarla como propiedad DBSet en el DBContext
         public int Id { get; set; }
+
+        //Manejo de concurrencia por campo
+        [ConcurrencyCheck]
         public string Nombre { get; set; }
         public bool EstaBorrado { get; set; }
 

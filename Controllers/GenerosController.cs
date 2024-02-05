@@ -416,6 +416,34 @@ namespace EFCorePeliculas.Controllers
             //Al ejecutar el endpoint nos devolverá el id del género recién creado
         }
 
+
+        //Conflicto de Concurencia por Campo
+
+        //Situación de ejemplo simulada; los cambios que se guardarán son los de primera persona
+
+        [HttpPost("concurrency_token")]
+        public async Task<ActionResult> ConcurrencyToken()
+        {
+            var generoId = 1;
+
+            //Primera persona lee la bd
+            
+            var genero=await _context.Generos.FirstOrDefaultAsync(g=>g.Id==generoId);
+
+            genero.Nombre = "Nombre cambiado por primera persona";
+
+            //Segunda persona intenta actualizar el registro
+
+            await _context.Database.ExecuteSqlInterpolatedAsync($@"UPDATE Generos SET NombreGenero={genero.Nombre} 
+            WHERE id={generoId}");
+
+
+            //Primera persona intenta actualizar
+            await _context.SaveChangesAsync();
+
+            return Ok();
+
+        }
     }
 
 }
