@@ -16,6 +16,19 @@ namespace EFCorePeliculas.Entidades.Configuraciones
 
             //Concurrencia por fila
             //builder.Property(f => f.Version).IsRowVersion();
+
+            builder.ToTable(name: "Facturas", opciones =>
+            {
+                opciones.IsTemporal(t =>
+                {
+                    t.HasPeriodStart("Desde");
+                    t.HasPeriodEnd("Hasta");
+                    t.UseHistoryTable("FacturasHistorico");
+                });
+            });
+
+            builder.Property("Desde").HasColumnType("datetime2");
+            builder.Property("Hasta").HasColumnType("datetime2");
         }
     }
 }
