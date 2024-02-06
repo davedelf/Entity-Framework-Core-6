@@ -538,6 +538,118 @@ namespace EFCorePeliculas.Controllers
                 .ToListAsync();
             return Ok(generos);
         }
+
+        //TemporalAsOf - consultar registro temporal en determinado momento o fecha
+        [HttpGet("TemporalAsOf/{id:int}")]
+        public async Task<ActionResult<Genero>> GetTemporalAsOf(int id, DateTime fecha)
+        {
+            var genero = await _context.Generos.TemporalAsOf(fecha).AsTracking()
+                .Where(g => g.Id == id)
+                .Select(g => new
+                {
+                    Id = g.Id,
+                    Nombre = g.Nombre,
+                    PeriodStart = EF.Property<DateTime>(g, "PeriodStart"),
+                    PeriodEnd = EF.Property<DateTime>(g, "PeriodEnd")
+                })
+                .FirstOrDefaultAsync();
+            return Ok(genero);
+        }
+
+        //TemporalFromTo - consultar registros temporales dentro de un rango de fecha
+        [HttpGet("TemporalFromTo/{id:int}")]
+        public async Task<ActionResult<Genero>> GetTemporalFromTo(int id, DateTime fechaInicio, DateTime fechaFin)
+        {
+            var generos = await _context.Generos.TemporalFromTo(fechaInicio, fechaFin).AsTracking()
+                .Where(g => g.Id == id)
+                .Select(g => new
+                {
+                    Id = g.Id,
+                    Nombre = g.Nombre,
+                    PeriodStart = EF.Property<DateTime>(g, "PeriodStart"),
+                    PeriodEnd = EF.Property<DateTime>(g, "PeriodEnd")
+                })
+                .ToListAsync();
+            return Ok(generos);
+        }
+        
+        //TemporalContained - consultar registros temporales en un rango de fecha
+        [HttpGet("TemporalContainedIn/{id:int}")]
+        public async Task<ActionResult<Genero>> GetTemporalContainedIn(int id, DateTime fechaInicio, DateTime fechaFin)
+        {
+            var generos = await _context.Generos.TemporalContainedIn(fechaInicio, fechaFin).AsTracking()
+                .Where(g => g.Id == id)
+                .Select(g => new
+                {
+                    Id = g.Id,
+                    Nombre = g.Nombre,
+                    PeriodStart = EF.Property<DateTime>(g, "PeriodStart"),
+                    PeriodEnd = EF.Property<DateTime>(g, "PeriodEnd")
+                })
+                .ToListAsync();
+            return Ok(generos);
+        }
+
+        /*TemporalBetween - consultar registros temporales activos dentro de un rango de fecha con la particularidad
+         de que si la fechaInicio coincide con fechaFin pues éste es incluido en el resultado*/
+        [HttpGet("TemporalBetween/{id:int}")]
+        public async Task<ActionResult<Genero>> GetTemporalBetween(int id, DateTime fechaInicio, DateTime fechaFin)
+        {
+            var generos = await _context.Generos.TemporalBetween(fechaInicio, fechaFin).AsTracking()
+               .Where(g => g.Id == id)
+               .Select(g => new
+               {
+                   Id = g.Id,
+                   Nombre = g.Nombre,
+                   PeriodStart = EF.Property<DateTime>(g, "PeriodStart"),
+                   PeriodEnd = EF.Property<DateTime>(g, "PeriodEnd")
+               })
+               .ToListAsync();
+            return Ok(generos);
+        }
+
+        //Restaurar registro de la tabla histórica a la temporal
+
+        //ESTE ENDPOINT NO FUNCIONA, ARROJA ERROR DE PK YA EXISTENTE. VER COMO SOLUCIONARLO
+
+        [HttpPost("Restaurar_Borrado/{id:int}")]
+        public async Task<ActionResult> RestaurarBorrado(int id, DateTime fecha)
+        {
+            var genero = await _context.Generos.TemporalAsOf(fecha).AsTracking()
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(g => g.Id == id);
+            if (genero is null)
+            {
+                return NotFound();
+            }
+
+            /*Este bloque try lo colocamos porque de lo contrario al restaurar el nuevo género se crearía con un nuevo
+             id y se perderían las relaciones que estaban con ese género, es decir, no coincidiría con el verdadero
+            id del registro, además de que es identity*/
+            try
+            {
+                await _context.Database.ExecuteSqlInterpolatedAsync($@"
+                    SET IDENTITY_INSERT Generos ON;
+
+                    INSERT INTO Generos (Id, NombreGenero, EstaBorrado)
+                    VALUES ({genero.Id},{genero.Nombre}, 0)
+
+                    SET IDENTITY_INSERT Generos OFF;
+                    ");
+            }
+            finally
+            {
+                //Este bloque lo colocamos por si falla el cierre de IDENTITY_INSERT en el bloque try
+                await _context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT Generos OFF;");
+            }
+
+            return Ok();
+        }
+
+
+
+
+
     }
 
 }
