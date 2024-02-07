@@ -51,7 +51,7 @@ using (var scope = app.Services.CreateScope())
 {
     var applicationDbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     /*Sabemos que la clase Program se correrá al comienzo de ejecutar la aplicación entonces colocamos:*/
-    applicationDbContext.Database.Migrate();
+    //applicationDbContext.Database.Migrate();
 
     /*Y de esta forma vamos a poder ejecutar las migraciones al momento de cargar la aplicación*/
 }
