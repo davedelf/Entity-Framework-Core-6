@@ -1,4 +1,5 @@
-﻿using EFCorePeliculas.Servicios;
+﻿using AutoMapper;
+using EFCorePeliculas.Servicios;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,23 @@ namespace EFCorePeliculas.Testing
          Además de ello deberemos evitar el uso de DataSeeding, ya que esto inserta data en tablas que usan tablas temporales
         lo cual, en diferentes versiones de EF Core, puede generar errores.
         
-         Luego deberemos instalar el NuGet en el proyecto que estam */
+         Luego deberemos instalar el NuGet en el proyecto que estamos testeando, es decir, tanto en la API como en el
+        proyecto de pruebas*/
+
+        //Configurando AutoMapper para Pruebas - Pruebas Negativas
+
+        protected IMapper ConfigurarAutoMapper()
+        {
+            var config = new MapperConfiguration(opciones =>
+            {
+                opciones.AddProfile(new AutoMapperProfile());
+            });
+
+            return config.CreateMapper();
+        }
+        //Y con esto ya podemos insertar AutoMapper en las pruebas. En este caso vamos a probar el endpoint
+        // PUT de GenerosController que sí utiliza AutoMapper
+
+        
     }
 }
