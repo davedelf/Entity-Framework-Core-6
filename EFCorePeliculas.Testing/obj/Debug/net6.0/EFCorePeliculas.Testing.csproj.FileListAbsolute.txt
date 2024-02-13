@@ -304,3 +304,7 @@ C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePelicula
 C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas.Testing\obj\Debug\net6.0\EFCorePeliculas.Testing.pdb
 C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas.Testing\obj\Debug\net6.0\EFCorePeliculas.Testing.genruntimeconfig.cache
 C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas.Testing\obj\Debug\net6.0\ref\EFCorePeliculas.Testing.dll
+C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas.Testing\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas.Testing\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas.Testing\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas.Testing\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll

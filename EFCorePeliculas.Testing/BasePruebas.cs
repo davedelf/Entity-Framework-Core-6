@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EFCorePeliculas.Testing
 {
-    internal class BasePruebas
+    public class BasePruebas
     {
         //Este método me va a permitir crear un dbcontext para pruebas
         protected ApplicationDbContext ConstruirContext(string nombreDB)

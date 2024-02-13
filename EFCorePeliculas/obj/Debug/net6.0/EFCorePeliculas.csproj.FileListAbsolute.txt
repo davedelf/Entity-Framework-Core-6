@@ -364,3 +364,7 @@ C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePelicula
 C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas\obj\Debug\net6.0\EFCorePeliculas.pdb
 C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas\obj\Debug\net6.0\EFCorePeliculas.genruntimeconfig.cache
 C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas\obj\Debug\net6.0\ref\EFCorePeliculas.dll
+C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\david\OneDrive\Documentos\Cursos\EF Core\EFCorePeliculas\EFCorePeliculas\bin\Debug\net6.0\System.Diagnostics.DiagnosticSource.dll
