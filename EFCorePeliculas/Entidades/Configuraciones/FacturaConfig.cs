@@ -27,8 +27,8 @@ namespace EFCorePeliculas.Entidades.Configuraciones
                 });
             });
 
-            builder.Property("Desde").HasColumnType("datetime2");
-            builder.Property("Hasta").HasColumnType("datetime2");
+            builder.Property<DateTime>("Desde").HasColumnType("datetime2");
+            builder.Property<DateTime>("Hasta").HasColumnType("datetime2");
         }
     }
 }

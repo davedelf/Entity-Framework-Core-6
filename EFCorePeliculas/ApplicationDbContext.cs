@@ -161,8 +161,16 @@ builder.Services.AddDbContext<ApplicationDbContext>();*/
              aplicaciones grandes o muchos modelos. Lo que hestamos haciendo en esta configuración es que lea cada propiedad de cada modelo, se fije si es string y si su nombre
              es o contiene URL. En ese caso, no importa si está en mayúscula o minúscula, no lo convierte a Unicode.*/
 
-            SeedingPersonaMensaje.Seed(modelBuilder);
-            SeedingFacturas.Seed(modelBuilder);
+            /*lo colocamos dentro de este bloque para no tener conflictos con el proveedor en memoria, es decir, que si no estamos usando
+             el proveedor en memoria, que utilice o inyecte data en sqlserver
+            Entonces cuando usemos proveedor en memoria no usaremos data seeding y nuestra base de datos en memoria
+            se mantendrá vacía*/
+            if (!Database.IsInMemory())
+            {
+                SeedingPersonaMensaje.Seed(modelBuilder);
+                SeedingFacturas.Seed(modelBuilder);
+            }
+  
 
 
             modelBuilder.Entity<Merchandising>().ToTable("Merchandising");
