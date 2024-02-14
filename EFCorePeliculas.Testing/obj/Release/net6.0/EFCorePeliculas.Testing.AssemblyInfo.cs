@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("EFCorePeliculas")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("EFCorePeliculas.Testing")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bf3ad32fbbbc653ed8d6473ab2d8eea17dac609a")]
-[assembly: System.Reflection.AssemblyProductAttribute("EFCorePeliculas")]
-[assembly: System.Reflection.AssemblyTitleAttribute("EFCorePeliculas")]
+[assembly: System.Reflection.AssemblyProductAttribute("EFCorePeliculas.Testing")]
+[assembly: System.Reflection.AssemblyTitleAttribute("EFCorePeliculas.Testing")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.
