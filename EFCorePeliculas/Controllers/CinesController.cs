@@ -54,7 +54,7 @@ namespace EFCorePeliculas.Controllers
          que es un sistema de referencia ampliamente utilizado para representar la superficie de la Tierra en grados de latitud y longitud.*/
 
         [HttpGet("cercanos")]
-        public async Task<ActionResult<CineDTO>> Get(double latitud, double longitud)
+        public async Task<ActionResult> Get(double latitud, double longitud)
         {
             var geometryfactory=NtsGeometryServices.Instance.CreateGeometryFactory(srid:4326);
             var miUbicacion = geometryfactory.CreatePoint(new Coordinate(latitud, longitud));

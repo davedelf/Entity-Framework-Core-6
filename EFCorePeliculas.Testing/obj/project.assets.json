@@ -8769,11 +8769,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EF Core\\EFCorePeliculas\\EFCorePeliculas.Testing\\EFCorePeliculas.Testing.csproj",
+      "projectUniqueName": "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EntityFrameworkCore\\EFCorePeliculas\\EFCorePeliculas.Testing\\EFCorePeliculas.Testing.csproj",
       "projectName": "EFCorePeliculas.Testing",
-      "projectPath": "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EF Core\\EFCorePeliculas\\EFCorePeliculas.Testing\\EFCorePeliculas.Testing.csproj",
+      "projectPath": "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EntityFrameworkCore\\EFCorePeliculas\\EFCorePeliculas.Testing\\EFCorePeliculas.Testing.csproj",
       "packagesPath": "C:\\Users\\david\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EF Core\\EFCorePeliculas\\EFCorePeliculas.Testing\\obj\\",
+      "outputPath": "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EntityFrameworkCore\\EFCorePeliculas\\EFCorePeliculas.Testing\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\david\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -8790,8 +8790,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EF Core\\EFCorePeliculas\\EFCorePeliculas\\EFCorePeliculas.csproj": {
-              "projectPath": "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EF Core\\EFCorePeliculas\\EFCorePeliculas\\EFCorePeliculas.csproj"
+            "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EntityFrameworkCore\\EFCorePeliculas\\EFCorePeliculas\\EFCorePeliculas.csproj": {
+              "projectPath": "C:\\Users\\david\\OneDrive\\Documentos\\Cursos\\EntityFrameworkCore\\EFCorePeliculas\\EFCorePeliculas\\EFCorePeliculas.csproj"
             }
           }
         }
@@ -8843,7 +8843,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
