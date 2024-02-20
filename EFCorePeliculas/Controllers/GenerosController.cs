@@ -363,7 +363,7 @@ namespace EFCorePeliculas.Controllers
             return Ok();
         }
 
-        //Sentencia Arbitraria
+        //Sentencia Arbitraria 
 
         [HttpPost("PostArbitrario")]
         public async Task<ActionResult> PostArbitrario(Genero genero)
