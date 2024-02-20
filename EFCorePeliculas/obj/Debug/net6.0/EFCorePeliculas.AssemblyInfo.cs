@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EFCorePeliculas")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08482e95de44bc43e6ed231519bbfa5cd7c624ed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd3f2694be6589990abbc7c2fc76c414d7ee9f06")]
 [assembly: System.Reflection.AssemblyProductAttribute("EFCorePeliculas")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EFCorePeliculas")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

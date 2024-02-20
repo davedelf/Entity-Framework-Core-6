@@ -11,54 +11,56 @@ namespace EFCorePeliculas
 {
     public class ApplicationDbContext : DbContext
     {
-        private IServicioUsuario servicioUsuario;
+        //private IServicioUsuario servicioUsuario;
         private readonly IEventoDbContext eventoDbContext;
 
         /*Si no queremos entrar en conflicto al utilizar la inyección de dependencias para instanciar el DbContext colocamos un constructor y en la clase Program
 builder.Services.AddDbContext<ApplicationDbContext>();*/
-        public ApplicationDbContext()
-        {
+        //public ApplicationDbContext()
+        //{
             
-        }
+        //}
 
         //Acá inyectamos los servicios
-        public ApplicationDbContext(DbContextOptions options,
-            IServicioUsuario servicioUsuario,IEventoDbContext eventosDbContext) 
+
+        //con la técnica del reciclado ya no es compatible esto, ya que no podemos tener otros parámetros en nuestro constructor
+        public ApplicationDbContext(DbContextOptions options
+            /*IServicioUsuario servicioUsuario,IEventoDbContext eventosDbContext*/) 
             : base(options)
         {
-            this.servicioUsuario=servicioUsuario;
-            if(eventosDbContext is not null)
-            {
-                ChangeTracker.Tracked += eventosDbContext.ManejarTracked;
-                ChangeTracker.StateChanged += eventosDbContext.ManejarState;
-                SavingChanges += eventosDbContext.ManejarSavingChanges;
-                SavedChanges += eventosDbContext.ManejarSavedChanges;
-                SaveChangesFailed += eventosDbContext.ManejarSaveChangesFailed;
-                //Estos eventos se van a disparar solo cuando no usemos el AsNoTracking, por eso es importante usar eventos con Tracking
-            }
+            //this.servicioUsuario=servicioUsuario;
+            //if(eventosDbContext is not null)
+            //{
+            //    ChangeTracker.Tracked += eventosDbContext.ManejarTracked;
+            //    ChangeTracker.StateChanged += eventosDbContext.ManejarState;
+            //    SavingChanges += eventosDbContext.ManejarSavingChanges;
+            //    SavedChanges += eventosDbContext.ManejarSavedChanges;
+            //    SaveChangesFailed += eventosDbContext.ManejarSaveChangesFailed;
+            //    //Estos eventos se van a disparar solo cuando no usemos el AsNoTracking, por eso es importante usar eventos con Tracking
+            //}
         }
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            ProcesarSalvado();
-            return base.SaveChangesAsync(cancellationToken);
-        }
+        //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        //{
+        //    ProcesarSalvado();
+        //    return base.SaveChangesAsync(cancellationToken);
+        //}
 
-        private void ProcesarSalvado()
-        {
-            foreach(var item in ChangeTracker.Entries().Where(e=>e.State== EntityState.Added && e.Entity is EntidadAuditable)) 
-            {
-                var entidad=item.Entity as EntidadAuditable;
-                entidad.UsuarioCrecion = servicioUsuario.ObtenerUsuarioId();
-                entidad.UsuarioModificacion = servicioUsuario.ObtenerUsuarioId();
-            }
+        //private void ProcesarSalvado()
+        //{
+        //    foreach(var item in ChangeTracker.Entries().Where(e=>e.State== EntityState.Added && e.Entity is EntidadAuditable)) 
+        //    {
+        //        var entidad=item.Entity as EntidadAuditable;
+        //        entidad.UsuarioCrecion = servicioUsuario.ObtenerUsuarioId();
+        //        entidad.UsuarioModificacion = servicioUsuario.ObtenerUsuarioId();
+        //    }
 
-            foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is EntidadAuditable))
-            {
-                var entidad = item.Entity as EntidadAuditable;
-                entidad.UsuarioModificacion = servicioUsuario.ObtenerUsuarioId();
-                item.Property(nameof(entidad.UsuarioCrecion)).IsModified = false;
-            }
-        }
+        //    foreach (var item in ChangeTracker.Entries().Where(e => e.State == EntityState.Modified && e.Entity is EntidadAuditable))
+        //    {
+        //        var entidad = item.Entity as EntidadAuditable;
+        //        entidad.UsuarioModificacion = servicioUsuario.ObtenerUsuarioId();
+        //        item.Property(nameof(entidad.UsuarioCrecion)).IsModified = false;
+        //    }
+        //}
 
         /*Para realiizar la misma configuración de inyección de dependencias pero en el mismo DbContext con el método OnConfiguring. Para no entrar en conflictos de configuración lo colocamos dentro de un condicional*/
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
