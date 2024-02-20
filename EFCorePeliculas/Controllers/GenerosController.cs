@@ -4,6 +4,7 @@ using EFCorePeliculas.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace EFCorePeliculas.Controllers
 {
@@ -56,6 +57,20 @@ namespace EFCorePeliculas.Controllers
                 opciones.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             
              */
+
+            //Para el caso de AddPooledDbContextFactory
+
+            //using (var nuevoContext = _dbContextFactory.CreateDbContext())
+            //{
+            //    nuevoContext.Logs.Add(new Log()
+            //    {
+            //        //Id=new Guid(),
+            //        Mensaje = "Ejecutando el método GenerosController.Get"
+            //    });
+
+            //    await nuevoContext.SaveChangesAsync();
+            //    return await nuevoContext.Generos.OrderByDescending(g => EF.Property<DateTime>(g, "FechaCreacion")).ToListAsync();
+            //}
 
         }
 

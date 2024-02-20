@@ -20,9 +20,11 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 /*Esto es Inyección de dependencias; nos permite acceder al ApplicationDbContext sin tener que instanciarlo*/
-builder.Services.AddDbContextPool<ApplicationDbContext>(opciones =>
-
+//builder.Services.AddDbContextFactory
+//builder.Services.AddPooledDbContextFactory
+builder.Services.AddDbContextFactory<ApplicationDbContext>(opciones =>
 {
+    
     opciones.UseSqlServer(connectionString, sqlServer => sqlServer.UseNetTopologySuite());
 
     /* De esta forma el comportamiento será global y no tendremos que especificarlo en cada endpoint */
